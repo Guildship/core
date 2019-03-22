@@ -29,6 +29,7 @@ defmodule Guildship.Repo.Migrations.Components do
       add :title, :string, null: false
       add :user_id, references(:users), null: false
       add :guild_id, references(:guilds), null: false
+      add :body, :text, null: false
 
       timestamps(type: :utc_datetime, inserted_at: :created_at)
     end

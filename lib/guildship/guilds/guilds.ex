@@ -1,6 +1,14 @@
 defmodule Guildship.Guilds do
   alias __MODULE__
-  alias Guilds.{Guild, ForumCategory, ForumThread, ForumThreadReply}
+
+  alias Guilds.{
+    Guild,
+    ForumCategory,
+    ForumThread,
+    ForumThreadReply,
+    GuildNewsPost
+  }
+
   alias Guildship.Repo
 
   def data do
@@ -44,6 +52,12 @@ defmodule Guildship.Guilds do
   def create_forum_thread_reply(params) do
     %ForumThreadReply{}
     |> ForumThreadReply.new(params)
+    |> Repo.insert()
+  end
+
+  def create_guild_news_post(params) do
+    %GuildNewsPost{}
+    |> GuildNewsPost.new(params)
     |> Repo.insert()
   end
 end
