@@ -1,6 +1,6 @@
 defmodule Guildship.Factory do
   use ExMachina.Ecto, repo: Guildship.Repo
-  alias Guildship.{Accounts, Guilds, Components}
+  alias Guildship.{Accounts, Guilds}
 
   def credential_factory do
     %Accounts.Credential{
