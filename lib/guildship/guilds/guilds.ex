@@ -6,7 +6,7 @@ defmodule Guildship.Guilds do
     ForumCategory,
     ForumThread,
     ForumThreadReply,
-    GuildNewsPost
+    GuildBlogPost
   }
 
   alias Guildship.Repo
@@ -56,8 +56,8 @@ defmodule Guildship.Guilds do
   end
 
   def create_guild_news_post(params) do
-    %GuildNewsPost{}
-    |> GuildNewsPost.new(params)
+    %GuildBlogPost{}
+    |> GuildBlogPost.new(params)
     |> Repo.insert()
   end
 end

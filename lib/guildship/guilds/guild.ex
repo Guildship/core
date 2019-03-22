@@ -3,12 +3,10 @@ defmodule Guildship.Guilds.Guild do
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.Guilds.ForumCategory
-  alias Guildship.Components.Component
 
   schema "guilds" do
     field :display_name, :string
     has_many :forum_categories, ForumCategory, on_delete: :delete_all
-    embeds_many :components, Component
 
     timestamps()
   end

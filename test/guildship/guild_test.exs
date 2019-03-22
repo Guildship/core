@@ -53,7 +53,7 @@ defmodule Guildship.GuildTest do
       user = insert(:user)
 
       assert {:ok,
-              %Guilds.GuildNewsPost{
+              %Guilds.GuildBlogPost{
                 user: user,
                 guild: guild,
                 title: "Howdy Everyone!",

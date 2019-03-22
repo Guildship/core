@@ -44,12 +44,4 @@ defmodule Guildship.Factory do
       forum_thread: build(:forum_thread)
     }
   end
-
-  def markdown_component_factory do
-    %Components.Component{
-      type: "markdown",
-      value: Faker.Lorem.paragraphs(1..5) |> Enum.join("\n\n"),
-      meta: %{}
-    }
-  end
 end
