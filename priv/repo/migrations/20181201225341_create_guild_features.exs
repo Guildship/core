@@ -20,6 +20,7 @@ defmodule Guildship.Repo.Migrations.Components do
     create table("forum_thread_replies") do
       add :user_id, references(:users), null: false
       add :forum_thread_id, references(:forum_threads), null: false
+      add :body, :text, null: false
 
       timestamps(type: :utc_datetime, inserted_at: :created_at)
     end

@@ -30,6 +30,23 @@ defmodule Guildship.GuildTest do
                  body: "Yooo!"
                })
     end
+
+    test "can reply to a thread" do
+      thread = insert(:forum_thread)
+      user = insert(:user)
+
+      assert {:ok,
+              %Guilds.ForumThreadReply{
+                forum_thread: thread,
+                user: user,
+                body: "Yo! Wazzup!"
+              }} =
+               Guilds.create_forum_thread_reply(%{
+                 forum_thread_id: thread.id,
+                 user_id: user.id,
+                 body: "Yo! Wazzup!"
+               })
+    end
   end
 
   describe "Guild Calendar" do

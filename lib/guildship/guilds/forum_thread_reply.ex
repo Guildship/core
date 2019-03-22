@@ -5,17 +5,17 @@ defmodule Guildship.Guilds.ForumThreadReply do
   alias Guildship.{Guilds, Accounts}
 
   schema "forum_thread_replies" do
+    field :body, :string
     belongs_to :user, Accounts.User
     belongs_to :forum_thread, Guilds.ForumThread
-    embeds_many :components, Guildship.Components.Component
 
     timestamps()
   end
 
   def changeset(%ForumThreadReply{} = forum_thread_reply, params) do
     forum_thread_reply
-    |> cast(params, [:user_id, :forum_thread_id, :components])
-    |> validate_required([:user_id, :forum_thread_id, :components])
+    |> cast(params, [:user_id, :forum_thread_id, :body])
+    |> validate_required([:user_id, :forum_thread_id, :body])
   end
 
   def new(%ForumThreadReply{} = forum_thread_reply, params) do
