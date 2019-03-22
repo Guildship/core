@@ -16,4 +16,5 @@ defmodule Guildship.HashId do
 
   def encode(value), do: "1g" <> Hashids.encode(hashid(), [value])
   def decode("1g" <> value), do: hd(Hashids.decode!(hashid(), value))
+  def decode(value), do: value
 end
