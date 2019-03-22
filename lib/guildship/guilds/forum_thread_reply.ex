@@ -1,5 +1,5 @@
 defmodule Guildship.Guilds.ForumThreadReply do
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.{Guilds, Accounts}
@@ -9,7 +9,7 @@ defmodule Guildship.Guilds.ForumThreadReply do
     belongs_to :forum_thread, Guilds.ForumThread
     embeds_many :components, Guildship.Components.Component
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   def changeset(%ForumThreadReply{} = forum_thread_reply, params) do

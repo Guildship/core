@@ -5,12 +5,10 @@
 use Mix.Config
 
 hashid_alphabet =
-  [
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "abcdefghijklmnopqrstuvwxyz",
-    "1234567890"
-  ]
-  |> Enum.join()
+  "_-" <>
+    "1234567890" <>
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" <>
+    "abcdefghijklmnopqrstuvwxyz"
 
 config :guildship,
   ecto_repos: [Guildship.Repo],

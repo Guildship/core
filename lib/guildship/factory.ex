@@ -33,7 +33,6 @@ defmodule Guildship.Factory do
   def forum_thread_factory do
     %Guilds.ForumThread{
       user: build(:user),
-      guild: build(:guild),
       forum_category: build(:forum_category),
       title: Faker.Lorem.sentence()
     }

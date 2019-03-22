@@ -1,12 +1,10 @@
 defmodule Guildship.HashId do
   defp hashid do
     default_alphabet =
-      [
-        "1234567890",
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "_-" <>
+        "1234567890" <>
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" <>
         "abcdefghijklmnopqrstuvwxyz"
-      ]
-      |> Enum.join()
 
     alphabet =
       Application.get_env(:guildship, :hashid_alphabet, default_alphabet)
@@ -16,6 +14,6 @@ defmodule Guildship.HashId do
     Hashids.new(min_len: min_length, salt: salt, alphabet: alphabet)
   end
 
-  def encode(value), do: "gs1-" <> Hashids.encode(hashid(), [value])
-  def decode("gs1-" <> value), do: hd(Hashids.decode!(hashid(), value))
+  def encode(value), do: "1g" <> Hashids.encode(hashid(), [value])
+  def decode("1g" <> value), do: hd(Hashids.decode!(hashid(), value))
 end

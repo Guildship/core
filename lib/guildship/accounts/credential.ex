@@ -1,8 +1,7 @@
 defmodule Guildship.Accounts.Credential do
   @moduledoc false
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
-  alias Comeonin.Argon2
   alias Guildship.Accounts.User
   alias __MODULE__
 

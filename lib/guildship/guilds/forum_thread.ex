@@ -1,5 +1,5 @@
 defmodule Guildship.Guilds.ForumThread do
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.{Guilds, Accounts}
@@ -7,17 +7,16 @@ defmodule Guildship.Guilds.ForumThread do
   schema "forum_threads" do
     field :title, :string
     belongs_to :user, Accounts.User
-    belongs_to :guild, Guilds.Guild
     belongs_to :forum_category, Guilds.ForumCategory
     has_many :forum_thread_replies, Guilds.ForumThreadReply
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   def changeset(%ForumThread{} = forum_thread, params) do
     forum_thread
-    |> cast(params, [:title, :user_id, :guild_id, :forum_category_id])
-    |> validate_required([:title, :user_id, :guild_id, :forum_category_id])
+    |> cast(params, [:title, :user_id, :forum_category_id])
+    |> validate_required([:title, :user_id, :forum_category_id])
   end
 
   def new(%ForumThread{} = forum_thread, params) do

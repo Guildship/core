@@ -5,7 +5,7 @@ defmodule Guildship.Repo.Migrations.CreateAccounts do
     create table("users") do
       add :username, :string, null: false
 
-      timestamps()
+      timestamps(type: :utc_datetime, inserted_at: :created_at)
     end
 
     create unique_index("users", [:username])

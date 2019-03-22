@@ -1,5 +1,5 @@
 defmodule Guildship.Guild.GuildNewsPost do
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.{Accounts, Guilds, Components}

@@ -6,7 +6,7 @@ defmodule GuildshipWeb.Schema.GuildTypes do
   object :guild do
     field :id, non_null(:hashid)
     field :display_name, non_null(:string)
-    field :inserted_at, non_null(:datetime)
+    field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
     field :components, list_of(:component)
 

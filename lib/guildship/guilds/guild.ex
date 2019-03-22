@@ -1,5 +1,5 @@
 defmodule Guildship.Guilds.Guild do
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.Guilds.ForumCategory
@@ -10,7 +10,7 @@ defmodule Guildship.Guilds.Guild do
     has_many :forum_categories, ForumCategory, on_delete: :delete_all
     embeds_many :components, Component
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   def changeset(%Guild{} = guild, params) do

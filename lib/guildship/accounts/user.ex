@@ -1,6 +1,6 @@
 defmodule Guildship.Accounts.User do
   @moduledoc false
-  use Ecto.Schema
+  use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.Accounts.Credential
@@ -9,7 +9,7 @@ defmodule Guildship.Accounts.User do
     field :username, :string
     has_many :credentials, Credential, on_delete: :delete_all
 
-    timestamps(type: :utc_datetime)
+    timestamps()
   end
 
   defp changeset(%User{} = user, attrs) do
