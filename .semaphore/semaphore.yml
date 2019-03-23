@@ -11,6 +11,10 @@ blocks:
       env_vars:
         - name: MIX_ENV
           value: test
+      prologue:
+        commands:
+          - kiex install 1.8
+          - sem-version elixir 1.8
       jobs:
         - name: mix and cache
           commands:
@@ -31,6 +35,8 @@ blocks:
           value: test
       prologue:
         commands:
+          - kiex install 1.8
+          - sem-version elixir 1.8
           - checkout
           # Restore dependencies and compiled code
           - cache restore mix-deps-$SEMAPHORE_GIT_BRANCH-$(checksum mix.lock),mix-deps-$SEMAPHORE_GIT_BRANCH,mix-deps-master
