@@ -14,6 +14,17 @@ defmodule Guildship.SupportTest do
     end
 
     test "can provide feedback when logged in" do
+      user = insert(:user)
+
+      assert {:ok,
+              %Support.Feedback{
+                user: user,
+                message: "how to delete ur app from the internet?"
+              }} =
+               Support.send_feedback(%{
+                 user_id: user.id,
+                 message: "how to delete ur app from the internet?"
+               })
     end
   end
 

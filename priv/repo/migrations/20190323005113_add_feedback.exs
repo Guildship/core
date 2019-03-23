@@ -3,7 +3,10 @@ defmodule Guildship.Repo.Migrations.AddFeedback do
 
   def change do
     create table("feedback") do
-      add :message, :text, null: false
+      add(:message, :text, null: false)
+      add(:user_id, references(:users))
+
+      timestamps(type: :utc_datetime, inserted_at: :created_at)
     end
   end
 end

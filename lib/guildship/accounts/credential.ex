@@ -50,7 +50,7 @@ defmodule Guildship.Accounts.Credential do
          %Ecto.Changeset{valid?: true, changes: %{type: "email"}} = changeset
        ) do
     changeset
-    |> validate_length(:password, min: 8)
+    |> validate_length(:password, min: 8, max: 256)
   end
 
   defp validate_password(changeset), do: changeset

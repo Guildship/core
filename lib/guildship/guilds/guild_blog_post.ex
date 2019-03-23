@@ -10,7 +10,7 @@ defmodule Guildship.Guilds.GuildBlogPost do
     belongs_to :user, Accounts.User
     belongs_to :guild, Guilds.Guild
 
-    timestamps type: :utc_datetime
+    timestamps()
   end
 
   def changeset(%GuildBlogPost{} = blog_post, params) do
