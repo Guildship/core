@@ -39,4 +39,5 @@ blocks:
       jobs:
         - name: Everything
           commands:
+            - mix ecto.setup
             - mix test
