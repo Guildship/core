@@ -39,5 +39,5 @@ blocks:
       jobs:
         - name: Everything
           commands:
-            - mix ecto.setup
+            - sem-service start postgres
             - mix test
