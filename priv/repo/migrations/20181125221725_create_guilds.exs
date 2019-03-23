@@ -6,7 +6,7 @@ defmodule Guildship.Repo.Migrations.CreateGuilds do
       add :display_name, :string, null: false
       add :components, :jsonb, default: "[]", null: false
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
   end
 end

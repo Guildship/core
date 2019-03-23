@@ -6,7 +6,7 @@ defmodule Guildship.Repo.Migrations.AddFeedback do
       add(:message, :text, null: false)
       add(:user_id, references(:users))
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
   end
 end

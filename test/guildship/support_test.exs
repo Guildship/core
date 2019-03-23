@@ -29,10 +29,14 @@ defmodule Guildship.SupportTest do
   end
 
   describe "Flagging" do
-    test "can flag content when not logged in" do
-    end
+    test "can flag a forum thread reply" do
+      %Guildship.Guilds.ForumThreadReply{id: resource_id} =
+        resource = insert(:forum_thread_reply)
 
-    test "can flag content when logged in" do
+      {:ok,
+       %Support.Flag{
+         flaggable_id: resource_id
+       }} = Support.flag_content(resource)
     end
   end
 end

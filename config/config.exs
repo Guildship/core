@@ -29,6 +29,8 @@ config :guildship, GuildshipWeb.Endpoint,
   render_errors: [view: GuildshipWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: GuildshipWeb.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :guildship, Guildship.Repo, migration_timestamps: [type: :utc_datetime]
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

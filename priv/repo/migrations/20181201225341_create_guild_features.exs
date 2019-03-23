@@ -6,7 +6,7 @@ defmodule Guildship.Repo.Migrations.CreateGuildFeatures do
       add(:name, :string, null: false)
       add(:guild_id, references(:guilds), null: false)
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
 
     create table("forum_threads") do
@@ -14,7 +14,7 @@ defmodule Guildship.Repo.Migrations.CreateGuildFeatures do
       add(:user_id, references(:users), null: false)
       add(:forum_category_id, references(:forum_categories), null: false)
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
 
     create table("forum_thread_replies") do
@@ -22,7 +22,7 @@ defmodule Guildship.Repo.Migrations.CreateGuildFeatures do
       add(:forum_thread_id, references(:forum_threads), null: false)
       add(:body, :text, null: false)
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
 
     create table("guild_blog_posts") do
@@ -31,7 +31,7 @@ defmodule Guildship.Repo.Migrations.CreateGuildFeatures do
       add(:guild_id, references(:guilds), null: false)
       add(:body, :text, null: false)
 
-      timestamps(type: :utc_datetime, inserted_at: :created_at)
+      timestamps(inserted_at: :created_at)
     end
   end
 end

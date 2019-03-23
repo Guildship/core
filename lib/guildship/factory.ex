@@ -41,7 +41,8 @@ defmodule Guildship.Factory do
   def forum_thread_reply_factory do
     %Guilds.ForumThreadReply{
       user: build(:user),
-      forum_thread: build(:forum_thread)
+      forum_thread: build(:forum_thread),
+      body: Faker.Lorem.sentences() |> Enum.join()
     }
   end
 end
