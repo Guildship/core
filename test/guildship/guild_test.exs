@@ -144,5 +144,19 @@ defmodule Guildship.GuildTest do
                  user_id: user.id
                })
     end
+
+    test "can react to a forum thread reply" do
+      %{id: resource_id} = forum_thread_reply = insert(:forum_thread_reply)
+      %{id: user_id} = user = insert(:user)
+
+      assert {:ok,
+              %Guilds.Reaction{
+                user_id: user_id,
+                reactionable_id: resource_id
+              }} =
+               Guilds.add_reaction(forum_thread_reply, %{
+                 user_id: user.id
+               })
+    end
   end
 end

@@ -5,6 +5,8 @@ defmodule Guildship.Repo.Migrations.AddGuildBlogPostReactions do
     create table("guild_blog_posts_reactions") do
       add :reactionable_id, references(:guild_blog_posts), null: false
       add :user_id, references(:users), null: false
+
+      timestamps(inserted_at: :created_at)
     end
   end
 end

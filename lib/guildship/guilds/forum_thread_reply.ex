@@ -12,6 +12,9 @@ defmodule Guildship.Guilds.ForumThreadReply do
     has_many :flags, {"forum_thread_replies_flags", Support.Flag},
       foreign_key: :flaggable_id
 
+    has_many :reactions, {"forum_thread_replies_reactions", Guilds.Reaction},
+      foreign_key: :reactionable_id
+
     timestamps()
   end
 

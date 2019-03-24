@@ -5,5 +5,7 @@ defmodule Guildship.Guilds.Reaction do
   schema "abstract table: reactions" do
     field :reactionable_id, :integer
     belongs_to :user, Accounts.User
+
+    timestamps()
   end
 end
