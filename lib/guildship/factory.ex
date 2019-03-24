@@ -54,4 +54,14 @@ defmodule Guildship.Factory do
       body: Faker.Lorem.sentences() |> Enum.join()
     }
   end
+
+  def calendar_event_factory do
+    %Guilds.CalendarEvent{
+      guild: build(:guild),
+      user: build(:user),
+      title: Faker.Lorem.sentence(),
+      start_date: Date.utc_today(),
+      end_date: Date.utc_today()
+    }
+  end
 end

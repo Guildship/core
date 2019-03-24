@@ -13,6 +13,9 @@ defmodule Guildship.Guilds.CalendarEvent do
     field :end_time, :time
     belongs_to :user, Accounts.User
     belongs_to :guild, Guilds.Guild
+
+    has_many :reactions, {"calendar_events_reactions", Guilds.Reaction},
+      foreign_key: :reactionable_id
   end
 
   def changeset(%CalendarEvent{} = calendar_event, params) do
@@ -27,7 +30,7 @@ defmodule Guildship.Guilds.CalendarEvent do
       :end_date,
       :end_time
     ])
-    |> validate_required([:user_id, :guild_id, :title, :start_date])
+    |> validate_required([:user_id, :guild_id, :title, :start_date, :end_date])
     |> validate_dates()
   end
 

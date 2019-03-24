@@ -158,5 +158,19 @@ defmodule Guildship.GuildTest do
                  user_id: user.id
                })
     end
+
+    test "can react to a calendar event" do
+      %{id: resource_id} = calendar_event = insert(:calendar_event)
+      %{id: user_id} = user = insert(:user)
+
+      assert {:ok,
+              %Guilds.Reaction{
+                user_id: user_id,
+                reactionable_id: resource_id
+              }} =
+               Guilds.add_reaction(calendar_event, %{
+                 user_id: user.id
+               })
+    end
   end
 end
