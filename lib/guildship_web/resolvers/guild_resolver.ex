@@ -1,8 +1,8 @@
 defmodule GuildshipWeb.Resolvers.GuildResolver do
   alias Guildship.{Accounts, Guilds}
 
-  def create_guild(_root, args, _info) do
-    Guilds.create_guild(args)
+  def create_guild(_root, args, %{context: %{current_user: user}}) do
+    Guilds.create_guild(args |> Map.put(:user_id, user.id))
   end
 
   def get_guilds(_root, _args, _info) do

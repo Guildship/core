@@ -1,6 +1,7 @@
 defmodule Guildship.Guilds do
   import Ecto
   alias __MODULE__
+  alias Ecto.Multi
 
   alias Guilds.{
     Guild,
@@ -22,10 +23,27 @@ defmodule Guildship.Guilds do
     queryable
   end
 
-  def create_guild(params) do
-    %Guild{}
-    |> Guild.new(params)
-    |> Repo.insert()
+  def create_guild(%{user_id: user_id} = params) do
+    case Multi.new()
+         |> Multi.insert(:guild, Guild.new(%Guild{}, params))
+         |> Multi.merge(fn %{guild: guild} ->
+           Multi.new()
+           |> Multi.insert(
+             :first_membership,
+             # When creating a guild, the creator becomes an admin
+             Membership.new(%Membership{role: "admin"}, %{
+               guild_id: guild.id,
+               user_id: user_id
+             })
+           )
+         end)
+         |> Repo.transaction() do
+      {:ok, %{guild: %Guild{} = guild, first_membership: %Membership{}}} ->
+        {:ok, guild}
+
+      {:error, error} ->
+        {:error, error}
+    end
   end
 
   def get_guilds() do

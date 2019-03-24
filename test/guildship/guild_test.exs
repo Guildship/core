@@ -1,6 +1,6 @@
 defmodule Guildship.GuildTest do
   use Guildship.DataCase, async: true
-  alias Guildship.Guilds
+  alias Guildship.{Accounts, Guilds}
 
   describe "Guild Forum" do
     test "can create forum categories" do
@@ -236,6 +236,17 @@ defmodule Guildship.GuildTest do
     end
 
     test "when creating a guild, the user that created the guild is the only member and they have an admin role" do
+      %{id: user_id} = insert(:user)
+
+      {:ok, guild} =
+        Guilds.create_guild(%{
+          user_id: user_id,
+          display_name: "TEST"
+        })
+
+      guild = guild |> Repo.preload([:guild_memberships])
+
+      assert [%Guilds.Membership{user_id: ^user_id}] = guild.guild_memberships
     end
   end
 end
