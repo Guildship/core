@@ -55,5 +55,8 @@ defmodule Guildship.SupportTest do
          flaggable_id: resource.id
        }} == Support.flag_content(resource)
     end
+
+    test "can flag a guild" do
+    end
   end
 end

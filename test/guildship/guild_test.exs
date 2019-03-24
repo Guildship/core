@@ -13,6 +13,30 @@ defmodule Guildship.GuildTest do
                })
     end
 
+    test "cannot create a forum category if just a guild member" do
+    end
+
+    test "can create a forum category if a guild moderator" do
+    end
+
+    test "can create a forum category if a guild admin" do
+    end
+
+    test "can edit a category" do
+    end
+
+    test "regular members cannot edit a category" do
+    end
+
+    test "guild moderators can edit a category" do
+    end
+
+    test "guild admins can edit a category" do
+    end
+
+    test "can delete a category" do
+    end
+
     test "can create a thread in a category" do
       forum_category = insert(:forum_category)
       user = insert(:user)
@@ -32,6 +56,63 @@ defmodule Guildship.GuildTest do
     end
 
     test "when creating a thread, the body becomes the first reply" do
+    end
+
+    test "can pin a thread" do
+    end
+
+    test "can lock a thread" do
+    end
+
+    test "regular members cannot reply to a locked thread" do
+    end
+
+    test "guild moderators can reply to locked threads" do
+    end
+
+    test "guild admins can reply to locked threads" do
+    end
+
+    test "guildship admins can reply to locked threads" do
+    end
+
+    test "can edit a thread" do
+    end
+
+    test "regular members cannot edit a thread they didn't create" do
+    end
+
+    test "guild moderators can edit a thread in a guild they moderate" do
+    end
+
+    test "guild moderators cannot edit a thread in a guild they don't moderate" do
+    end
+
+    test "guild admins cannot edit a thread in a guild they aren't admin of" do
+    end
+
+    test "guildship admins can edit threads" do
+    end
+
+    test "can delete a thread" do
+    end
+
+    test "regular members cannot delete threads" do
+    end
+
+    test "guild moderators can delete threads" do
+    end
+
+    test "guild admins can delete threads" do
+    end
+
+    test "guild moderators cannot delete a thread in a guild they don't moderate" do
+    end
+
+    test "guild admins cannot delete a thread in a guild they aren't admin of" do
+    end
+
+    test "guildship admins can delete threads" do
     end
 
     test "can reply to a thread" do
@@ -160,10 +241,16 @@ defmodule Guildship.GuildTest do
                  start_date: today
                })
     end
+
+    test "can edit an event" do
+    end
+
+    test "can delete an event" do
+    end
   end
 
   describe "Guild Blog" do
-    test "can create a news post" do
+    test "can create a blog post" do
       guild = insert(:guild)
       user = insert(:user)
 
@@ -180,6 +267,12 @@ defmodule Guildship.GuildTest do
                  title: "Howdy Everyone!",
                  body: "Wazzap!"
                })
+    end
+
+    test "can edit a blog post" do
+    end
+
+    test "can delete a blog post" do
     end
   end
 
@@ -198,6 +291,24 @@ defmodule Guildship.GuildTest do
                })
     end
 
+    test "cannot create duplicate reaction to a blog post" do
+    end
+
+    test "can remove a blog post reaction" do
+    end
+
+    test "users who reacted to a blog post can remove their reaction" do
+    end
+
+    test "guild moderators cannot remove someone else's reaction to a blog post" do
+    end
+
+    test "guild admins cannot remove someone else's reaction to a blog post" do
+    end
+
+    test "guildship admins cannot remove someone else's reaction to a blog post" do
+    end
+
     test "can react to a forum thread reply" do
       %{id: resource_id} = forum_thread_reply = insert(:forum_thread_reply)
       %{id: user_id} = user = insert(:user)
@@ -212,6 +323,27 @@ defmodule Guildship.GuildTest do
                })
     end
 
+    test "cannot create duplicate reaction to a forum thread reply" do
+    end
+
+    test "can remove a forum thread reply reaction" do
+    end
+
+    test "users who reacted to a forum thread reply can remove their reaction" do
+    end
+
+    test "guild moderators cannot remove someone else's reaction to a forum thread reply" do
+    end
+
+    test "guild admins cannot remove someone else's reaction to a forum thread reply" do
+    end
+
+    test "guildship admins cannot remove someone else's reaction to a forum thread reply" do
+    end
+
+    test "cannot react to a forum thread reply if the thread is locked" do
+    end
+
     test "can react to a calendar event" do
       %{id: resource_id} = calendar_event = insert(:calendar_event)
       %{id: user_id} = user = insert(:user)
@@ -224,6 +356,24 @@ defmodule Guildship.GuildTest do
                Guilds.add_reaction(calendar_event, %{
                  user_id: user.id
                })
+    end
+
+    test "cannot create duplicate reaction to a calendar event" do
+    end
+
+    test "can remove a calendar event reaction" do
+    end
+
+    test "users who reacted to a calendar event can remove their reaction" do
+    end
+
+    test "guild moderators cannot remove someone else's reaction to a calendar event" do
+    end
+
+    test "guild admins cannot remove someone else's reaction to a calendar event" do
+    end
+
+    test "guildship admins cannot remove someone else's reaction to a calendar event" do
     end
   end
 
@@ -292,6 +442,27 @@ defmodule Guildship.GuildTest do
 
       assert [%Guilds.Membership{user_id: ^user_id, role: "admin"}] =
                guild.guild_memberships
+    end
+
+    test "guild moderators cannot make a regular member a moderator" do
+    end
+
+    test "guild moderators cannot remove another moderator from the their guild" do
+    end
+
+    test "guild admins can promote regular members to moderator" do
+    end
+
+    test "guild admins can demote moderators" do
+    end
+
+    test "guild admins can remove regular members from the guild" do
+    end
+
+    test "guild admins can remove guild moderators from the guild" do
+    end
+
+    test "guild admins can remove guild admins from the guild" do
     end
   end
 end
