@@ -13,6 +13,9 @@ defmodule Guildship.Guilds.GuildBlogPost do
     has_many :flags, {"guild_blog_posts_flags", Support.Flag},
       foreign_key: :flaggable_id
 
+    has_many :reactions, {"guild_blog_posts_reactions", Guilds.Reaction},
+      foreign_key: :reactionable_id
+
     timestamps()
   end
 

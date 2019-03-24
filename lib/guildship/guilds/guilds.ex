@@ -1,4 +1,5 @@
 defmodule Guildship.Guilds do
+  import Ecto
   alias __MODULE__
 
   alias Guilds.{
@@ -66,5 +67,9 @@ defmodule Guildship.Guilds do
     %CalendarEvent{}
     |> CalendarEvent.new(params)
     |> Repo.insert()
+  end
+
+  def add_reaction(resource, %{user_id: user_id}) do
+    Repo.insert(build_assoc(resource, :reactions, user_id: user_id))
   end
 end
