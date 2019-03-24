@@ -31,6 +31,9 @@ defmodule Guildship.GuildTest do
                })
     end
 
+    test "when creating a thread, the body becomes the first reply" do
+    end
+
     test "can reply to a thread" do
       thread = insert(:forum_thread)
       user = insert(:user)
