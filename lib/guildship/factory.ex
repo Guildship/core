@@ -65,7 +65,7 @@ defmodule Guildship.Factory do
     }
   end
 
-  def guild_membership do
+  def guild_membership_factory do
     %Guilds.Membership{
       guild: build(:guild),
       user: build(:user),

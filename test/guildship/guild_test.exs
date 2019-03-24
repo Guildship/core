@@ -200,6 +200,14 @@ defmodule Guildship.GuildTest do
     end
 
     test "can leave a guild" do
+      %{user_id: user_id, guild_id: guild_id} =
+        membership = insert(:guild_membership)
+
+      assert {:ok,
+              %Guilds.Membership{
+                user_id: ^user_id,
+                guild_id: ^guild_id
+              }} = Guilds.leave_guild(membership)
     end
 
     test "members have roles" do

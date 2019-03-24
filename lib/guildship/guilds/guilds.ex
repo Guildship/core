@@ -80,4 +80,9 @@ defmodule Guildship.Guilds do
     |> Membership.new(params)
     |> Repo.insert()
   end
+
+  def leave_guild(%Membership{} = membership) do
+    membership
+    |> Repo.delete()
+  end
 end
