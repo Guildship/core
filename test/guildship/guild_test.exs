@@ -121,7 +121,7 @@ defmodule Guildship.GuildTest do
                 title: "Howdy Everyone!",
                 body: "Wazzap!"
               }} =
-               Guilds.create_guild_news_post(%{
+               Guilds.create_guild_blog_post(%{
                  user_id: user.id,
                  guild_id: guild.id,
                  title: "Howdy Everyone!",

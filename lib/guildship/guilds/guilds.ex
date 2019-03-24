@@ -56,7 +56,7 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
-  def create_guild_news_post(params) do
+  def create_guild_blog_post(params) do
     %GuildBlogPost{}
     |> GuildBlogPost.new(params)
     |> Repo.insert()
