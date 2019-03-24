@@ -4,12 +4,13 @@ defmodule Guildship.Accounts.User do
   import Ecto.Changeset
   alias __MODULE__
   alias Guildship.Accounts.Credential
-  alias Guildship.Support
+  alias Guildship.{Support, Guilds}
 
   schema "users" do
     field :username, :string
     has_many :credentials, Credential, on_delete: :delete_all
     has_many :flags, {"users_flags", Support.Flag}, foreign_key: :flaggable_id
+    has_many :guild_memberships, Guilds.Membership, on_delete: :delete_all
 
     timestamps()
   end

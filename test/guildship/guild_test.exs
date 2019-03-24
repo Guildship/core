@@ -185,6 +185,18 @@ defmodule Guildship.GuildTest do
 
   describe "Guild Memberships" do
     test "can join a guild" do
+      %{id: user_id} = insert(:user)
+      %{id: guild_id} = insert(:guild)
+
+      assert {:ok,
+              %Guilds.Membership{
+                user_id: ^user_id,
+                guild_id: ^guild_id
+              }} =
+               Guilds.join_guild(%{
+                 guild_id: guild_id,
+                 user_id: user_id
+               })
     end
 
     test "can leave a guild" do

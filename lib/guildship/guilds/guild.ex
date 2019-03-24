@@ -2,11 +2,12 @@ defmodule Guildship.Guilds.Guild do
   use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
-  alias Guildship.Guilds.ForumCategory
+  alias Guildship.Guilds.{Membership, ForumCategory}
 
   schema "guilds" do
     field :display_name, :string
     has_many :forum_categories, ForumCategory, on_delete: :delete_all
+    has_many :guild_membership, Membership, on_delete: :delete_all
 
     timestamps()
   end

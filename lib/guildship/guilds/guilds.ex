@@ -8,7 +8,8 @@ defmodule Guildship.Guilds do
     ForumThread,
     ForumThreadReply,
     GuildBlogPost,
-    CalendarEvent
+    CalendarEvent,
+    Membership
   }
 
   alias Guildship.Repo
@@ -71,5 +72,11 @@ defmodule Guildship.Guilds do
 
   def add_reaction(resource, %{user_id: user_id}) do
     Repo.insert(build_assoc(resource, :reactions, user_id: user_id))
+  end
+
+  def join_guild(params) do
+    %Membership{}
+    |> Membership.new(params)
+    |> Repo.insert()
   end
 end
