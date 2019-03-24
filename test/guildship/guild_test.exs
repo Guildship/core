@@ -132,13 +132,13 @@ defmodule Guildship.GuildTest do
 
   describe "Reactions" do
     test "can react to a blog post" do
-      %{id: blog_post_id} = blog_post = insert(:guild_blog_post)
+      %{id: resource_id} = blog_post = insert(:guild_blog_post)
       %{id: user_id} = user = insert(:user)
 
       assert {:ok,
               %Guilds.Reaction{
                 user_id: user_id,
-                reactionable_id: blog_post_id
+                reactionable_id: resource_id
               }} =
                Guilds.add_reaction(blog_post, %{
                  user_id: user.id
