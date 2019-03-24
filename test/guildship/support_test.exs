@@ -37,5 +37,14 @@ defmodule Guildship.SupportTest do
          flaggable_id: resource.id
        }} == Support.flag_content(resource)
     end
+
+    test "can flag a user" do
+      resource = insert(:user)
+
+      {:ok,
+       %Support.Flag{
+         flaggable_id: resource.id
+       }} == Support.flag_content(resource)
+    end
   end
 end
