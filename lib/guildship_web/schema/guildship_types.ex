@@ -13,29 +13,6 @@ defmodule GuildshipWeb.Schema.GuildshipTypes do
     parse &decode_hashid/1
   end
 
-  enum :component_type do
-    value :markdown, as: "markdown"
-  end
-
-  interface :component do
-    field :type, non_null(:component_type)
-
-    resolve_type fn
-      %{type: "markdown"}, _ ->
-        :markdown_component
-
-      _, _ ->
-        nil
-    end
-  end
-
-  object :markdown_component do
-    field :type, non_null(:component_type)
-    field :value, non_null(:string)
-
-    interface :component
-  end
-
   defp encode_hashid(value) do
     HashId.encode(value)
   end

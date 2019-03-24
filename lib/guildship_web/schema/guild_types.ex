@@ -8,7 +8,6 @@ defmodule GuildshipWeb.Schema.GuildTypes do
     field :display_name, non_null(:string)
     field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
-    field :components, list_of(:component)
 
     field :forum_categories, list_of(:forum_category) do
       resolve dataloader(Guilds)
@@ -39,6 +38,5 @@ defmodule GuildshipWeb.Schema.GuildTypes do
     field :id, non_null(:hashid)
     field :author, non_null(:user), resolve: dataloader(Guilds, :user, [])
     field :forum_thread, non_null(:forum_thread), resolve: dataloader(Guilds)
-    field :components, list_of(:component)
   end
 end
