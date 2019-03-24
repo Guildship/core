@@ -145,6 +145,17 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot create an event if not given an end date" do
+      user = insert(:user)
+      guild = insert(:guild)
+      today = Date.utc_today()
+
+      assert {:error, _} =
+               Guilds.create_calendar_event(%{
+                 user_id: user.id,
+                 guild_id: guild.id,
+                 title: "test",
+                 start_date: today
+               })
     end
   end
 
