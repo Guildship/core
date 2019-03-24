@@ -182,4 +182,21 @@ defmodule Guildship.GuildTest do
                })
     end
   end
+
+  describe "Guild Memberships" do
+    test "can join a guild" do
+    end
+
+    test "can leave a guild" do
+    end
+
+    test "members have roles" do
+    end
+
+    test "can change a member's role" do
+    end
+
+    test "when creating a guild, the user that created the guild is the only member and they have an admin role" do
+    end
+  end
 end
