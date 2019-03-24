@@ -245,7 +245,31 @@ defmodule Guildship.GuildTest do
     test "can edit an event" do
     end
 
+    test "regular users can't edit an event" do
+    end
+
+    test "guild moderators can edit an event" do
+    end
+
+    test "guild admins can edit an event" do
+    end
+
+    test "guildship admins can edit an event" do
+    end
+
     test "can delete an event" do
+    end
+
+    test "regular users can't delete an event" do
+    end
+
+    test "guild moderators can delete an event" do
+    end
+
+    test "guild admins can delete an event" do
+    end
+
+    test "guildship admins can delete an event" do
     end
   end
 
@@ -272,7 +296,31 @@ defmodule Guildship.GuildTest do
     test "can edit a blog post" do
     end
 
+    test "regular users can't edit a blog post" do
+    end
+
+    test "guild moderators can edit a blog post" do
+    end
+
+    test "guild admins can edit a blog post" do
+    end
+
+    test "guildship admins can edit a blog post" do
+    end
+
     test "can delete a blog post" do
+    end
+
+    test "regular users can't delete a blog post" do
+    end
+
+    test "guild moderators can delete a blog post" do
+    end
+
+    test "guild admins can delete a blog post" do
+    end
+
+    test "guildship admins can delete a blog post" do
     end
   end
 
