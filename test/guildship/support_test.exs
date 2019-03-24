@@ -30,30 +30,30 @@ defmodule Guildship.SupportTest do
 
   describe "Flagging" do
     test "can flag a forum thread reply" do
-      resource = insert(:forum_thread_reply)
+      %{id: resource_id} = resource = insert(:forum_thread_reply)
 
-      {:ok,
-       %Support.Flag{
-         flaggable_id: resource.id
-       }} == Support.flag_content(resource)
+      assert {:ok,
+              %Support.Flag{
+                flaggable_id: ^resource_id
+              }} = Support.flag_content(resource)
     end
 
     test "can flag a user" do
-      resource = insert(:user)
+      %{id: resource_id} = resource = insert(:user)
 
-      {:ok,
-       %Support.Flag{
-         flaggable_id: resource.id
-       }} == Support.flag_content(resource)
+      assert {:ok,
+              %Support.Flag{
+                flaggable_id: ^resource_id
+              }} = Support.flag_content(resource)
     end
 
     test "can flag a blog post" do
-      resource = insert(:guild_blog_post)
+      %{id: resource_id} = resource = insert(:guild_blog_post)
 
-      {:ok,
-       %Support.Flag{
-         flaggable_id: resource.id
-       }} == Support.flag_content(resource)
+      assert {:ok,
+              %Support.Flag{
+                flaggable_id: ^resource_id
+              }} = Support.flag_content(resource)
     end
 
     test "can flag a guild" do
