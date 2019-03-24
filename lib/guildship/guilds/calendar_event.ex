@@ -27,10 +27,28 @@ defmodule Guildship.Guilds.CalendarEvent do
       :end_date,
       :end_time
     ])
+    |> validate_dates()
   end
 
   def new(%CalendarEvent{} = calendar_event, params) do
     calendar_event
     |> changeset(params)
   end
+
+  def validate_dates(
+        %Ecto.Changeset{
+          valid?: true,
+          changes: %{start_date: start_date, end_date: end_date}
+        } = changeset
+      ) do
+    case Date.compare(end_date, start_date) do
+      :lt ->
+        add_error(changeset, :end_date, "End date can't be before start date")
+
+      _ ->
+        changeset
+    end
+  end
+
+  def validate_dates(changeset), do: changeset
 end

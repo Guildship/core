@@ -92,6 +92,21 @@ defmodule Guildship.GuildTest do
                  end_date: "2050-01-03"
                })
     end
+
+    test "cannot create an event that ends in a past date" do
+      user = insert(:user)
+      guild = insert(:guild)
+      today = Date.utc_today()
+
+      assert {:error, _} =
+               Guilds.create_calendar_event(%{
+                 user_id: user.id,
+                 guild_id: guild.id,
+                 title: "test",
+                 start_date: today,
+                 end_date: Date.add(today, -1)
+               })
+    end
   end
 
   describe "Guild Blog" do
