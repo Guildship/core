@@ -35,7 +35,6 @@ blocks:
           # Restore dependencies and compiled code
           - cache restore mix-deps-$SEMAPHORE_GIT_BRANCH-$(checksum mix.lock),mix-deps-$SEMAPHORE_GIT_BRANCH,mix-deps-master
           - cache restore mix-build-$SEMAPHORE_GIT_BRANCH-$(checksum mix.lock),mix-build-$SEMAPHORE_GIT_BRANCH,mix-build-master
-          - sudo apt-get update && sudo apt-get install -y libpq-dev
       jobs:
         - name: Everything
           commands:
