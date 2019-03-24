@@ -23,6 +23,15 @@ defmodule Guildship.Factory do
     }
   end
 
+  def guild_blog_post_factory do
+    %Guilds.GuildBlogPost{
+      user: build(:user),
+      guild: build(:guild),
+      title: Faker.Lorem.sentence(),
+      body: Faker.Lorem.paragraphs() |> Enum.join("\n\n")
+    }
+  end
+
   def forum_category_factory do
     %Guilds.ForumCategory{
       guild: build(:guild),

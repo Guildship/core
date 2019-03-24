@@ -2,13 +2,16 @@ defmodule Guildship.Guilds.GuildBlogPost do
   use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
-  alias Guildship.{Accounts, Guilds}
+  alias Guildship.{Accounts, Guilds, Support}
 
   schema "guild_blog_posts" do
     field :title, :string
     field :body, :string
     belongs_to :user, Accounts.User
     belongs_to :guild, Guilds.Guild
+
+    has_many :flags, {"guild_blog_posts_flags", Support.Flag},
+      foreign_key: :flaggable_id
 
     timestamps()
   end

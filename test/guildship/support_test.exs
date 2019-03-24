@@ -46,5 +46,14 @@ defmodule Guildship.SupportTest do
          flaggable_id: resource.id
        }} == Support.flag_content(resource)
     end
+
+    test "can flag a blog post" do
+      resource = insert(:guild_blog_post)
+
+      {:ok,
+       %Support.Flag{
+         flaggable_id: resource.id
+       }} == Support.flag_content(resource)
+    end
   end
 end
