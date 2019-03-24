@@ -22,4 +22,9 @@ defmodule Guildship.Guilds.Membership do
     membership
     |> changeset(params)
   end
+
+  def edit(%Membership{} = membership, params) do
+    membership
+    |> changeset(params)
+  end
 end

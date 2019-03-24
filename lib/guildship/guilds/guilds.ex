@@ -85,4 +85,12 @@ defmodule Guildship.Guilds do
     membership
     |> Repo.delete()
   end
+
+  def change_membership_role(%Membership{} = membership, new_role) do
+    membership
+    |> Membership.edit(%{
+      role: new_role
+    })
+    |> Repo.update()
+  end
 end

@@ -227,6 +227,12 @@ defmodule Guildship.GuildTest do
     end
 
     test "can change a member's role" do
+      membership = insert(:guild_membership)
+
+      assert {:ok,
+              %Guilds.Membership{
+                role: "moderator"
+              }} = Guilds.change_membership_role(membership, "moderator")
     end
 
     test "when creating a guild, the user that created the guild is the only member and they have an admin role" do
