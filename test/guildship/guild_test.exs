@@ -74,6 +74,24 @@ defmodule Guildship.GuildTest do
                  end_date: "2050-01-01"
                })
     end
+
+    test "can create a multiple-day calendar event" do
+      user = insert(:user)
+      guild = insert(:guild)
+
+      assert {:ok,
+              %Guilds.CalendarEvent{
+                start_date: ~D[2050-01-01],
+                end_date: ~D[2050-01-03]
+              }} =
+               Guilds.create_calendar_event(%{
+                 user_id: user.id,
+                 guild_id: guild.id,
+                 title: "TEST",
+                 start_date: "2050-01-01",
+                 end_date: "2050-01-03"
+               })
+    end
   end
 
   describe "Guild Blog" do
