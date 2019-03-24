@@ -27,6 +27,7 @@ defmodule Guildship.Guilds.CalendarEvent do
       :end_date,
       :end_time
     ])
+    |> validate_required([:user_id, :guild_id, :title, :start_date])
     |> validate_dates()
   end
 
