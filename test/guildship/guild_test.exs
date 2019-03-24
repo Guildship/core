@@ -107,6 +107,15 @@ defmodule Guildship.GuildTest do
                  end_date: Date.add(today, -1)
                })
     end
+
+    test "cannot create an event in a past time" do
+    end
+
+    test "cannot create an event if given a start time and not given an end time" do
+    end
+
+    test "cannot create an event if not given an end date" do
+    end
   end
 
   describe "Guild Blog" do
