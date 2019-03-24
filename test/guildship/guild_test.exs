@@ -47,7 +47,36 @@ defmodule Guildship.GuildTest do
                  body: "Yo! Wazzup!"
                })
     end
+  end
 
+  describe "Guild Calendar" do
+    test "can create a single-day calendar event" do
+      %{id: guild_id} = insert(:guild)
+      %{id: user_id} = insert(:user)
+
+      assert {:ok,
+              %Guilds.CalendarEvent{
+                user_id: ^user_id,
+                guild_id: ^guild_id,
+                title: "Launch Guildship",
+                description: "GUILDSHIP IS HERE WOO!",
+                start_date: ~D[2050-01-01],
+                start_time: nil,
+                end_date: ~D[2050-01-01],
+                end_time: nil
+              }} =
+               Guilds.create_calendar_event(%{
+                 user_id: user_id,
+                 guild_id: guild_id,
+                 title: "Launch Guildship",
+                 description: "GUILDSHIP IS HERE WOO!",
+                 start_date: "2050-01-01",
+                 end_date: "2050-01-01"
+               })
+    end
+  end
+
+  describe "Guild Blog" do
     test "can create a news post" do
       guild = insert(:guild)
       user = insert(:user)
@@ -66,11 +95,5 @@ defmodule Guildship.GuildTest do
                  body: "Wazzap!"
                })
     end
-  end
-
-  describe "Guild Calendar" do
-  end
-
-  describe "Guild News" do
   end
 end

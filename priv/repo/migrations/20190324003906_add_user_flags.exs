@@ -3,11 +3,9 @@ defmodule Guildship.Repo.Migrations.AddUserFlags do
 
   def change do
     create table("users_flags") do
-      add :flaggable_id, :integer, null: false
+      add :flaggable_id, references(:users), null: false
 
       timestamps(inserted_at: :created_at)
     end
-
-    create index("users_flags", [:flaggable_id])
   end
 end

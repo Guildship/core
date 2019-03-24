@@ -6,7 +6,8 @@ defmodule Guildship.Guilds do
     ForumCategory,
     ForumThread,
     ForumThreadReply,
-    GuildBlogPost
+    GuildBlogPost,
+    CalendarEvent
   }
 
   alias Guildship.Repo
@@ -58,6 +59,12 @@ defmodule Guildship.Guilds do
   def create_guild_news_post(params) do
     %GuildBlogPost{}
     |> GuildBlogPost.new(params)
+    |> Repo.insert()
+  end
+
+  def create_calendar_event(params) do
+    %CalendarEvent{}
+    |> CalendarEvent.new(params)
     |> Repo.insert()
   end
 end
