@@ -64,4 +64,12 @@ defmodule Guildship.Factory do
       end_date: Date.utc_today()
     }
   end
+
+  def guild_membership do
+    %Guilds.Membership{
+      guild: build(:guild),
+      user: build(:user),
+      role: "member"
+    }
+  end
 end

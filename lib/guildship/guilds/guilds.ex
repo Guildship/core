@@ -75,7 +75,8 @@ defmodule Guildship.Guilds do
   end
 
   def join_guild(params) do
-    %Membership{}
+    # You will always default to member when joining a guild
+    %Membership{role: "member"}
     |> Membership.new(params)
     |> Repo.insert()
   end

@@ -203,6 +203,19 @@ defmodule Guildship.GuildTest do
     end
 
     test "members have roles" do
+      %{id: user_id} = insert(:user)
+      %{id: guild_id} = insert(:guild)
+
+      assert {:ok,
+              %Guilds.Membership{
+                user_id: ^user_id,
+                guild_id: ^guild_id,
+                role: "member"
+              }} =
+               Guilds.join_guild(%{
+                 guild_id: guild_id,
+                 user_id: user_id
+               })
     end
 
     test "can change a member's role" do
