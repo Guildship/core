@@ -109,6 +109,22 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot create an event in a past time" do
+      user = insert(:user)
+      guild = insert(:guild)
+      today = Date.utc_today()
+      {:ok, start_time} = Time.new(12, 0, 0)
+      {:ok, end_time} = Time.new(11, 0, 0)
+
+      assert {:error, _} =
+               Guilds.create_calendar_event(%{
+                 user_id: user.id,
+                 guild_id: guild.id,
+                 title: "test",
+                 start_date: today,
+                 start_time: start_time,
+                 end_date: today,
+                 end_time: end_time
+               })
     end
 
     test "cannot create an event if given a start time and not given an end time" do

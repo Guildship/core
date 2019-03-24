@@ -31,7 +31,7 @@ defmodule Guildship.Guilds.CalendarEvent do
       :end_time
     ])
     |> validate_required([:user_id, :guild_id, :title, :start_date, :end_date])
-    |> validate_dates()
+    |> validate_dates_and_times()
   end
 
   def new(%CalendarEvent{} = calendar_event, params) do
@@ -39,7 +39,32 @@ defmodule Guildship.Guilds.CalendarEvent do
     |> changeset(params)
   end
 
-  def validate_dates(
+  def validate_dates_and_times(
+        %Ecto.Changeset{
+          valid?: true,
+          changes: %{
+            start_date: start_date,
+            start_time: start_time,
+            end_time: end_time,
+            end_date: end_date
+          }
+        } = changeset
+      )
+      when start_time != nil and end_time != nil do
+    case {Date.compare(end_date, start_date),
+          Time.compare(end_time, start_time)} do
+      {:eq, :lt} ->
+        add_error(changeset, :end_time, "End time can't be before start time")
+
+      {:lt, _} ->
+        add_error(changeset, :end_date, "End date can't be before start date")
+
+      _ ->
+        changeset
+    end
+  end
+
+  def validate_dates_and_times(
         %Ecto.Changeset{
           valid?: true,
           changes: %{start_date: start_date, end_date: end_date}
@@ -54,5 +79,5 @@ defmodule Guildship.Guilds.CalendarEvent do
     end
   end
 
-  def validate_dates(changeset), do: changeset
+  def validate_dates_and_times(changeset), do: changeset
 end
