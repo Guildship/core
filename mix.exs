@@ -11,7 +11,9 @@ defmodule Guildship.Umbrella.MixProject do
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test]
     ]
   end
 
@@ -46,7 +48,8 @@ defmodule Guildship.Umbrella.MixProject do
       {:apollo_tracing, "~> 0.4"},
       {:ex_machina, "~> 2.3"},
       {:argon2_elixir, "~> 2.0"},
-      {:faker, "~> 0.11.2"}
+      {:faker, "~> 0.11.2"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
