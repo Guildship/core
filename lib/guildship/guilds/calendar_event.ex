@@ -39,18 +39,18 @@ defmodule Guildship.Guilds.CalendarEvent do
     |> changeset(params)
   end
 
-  def validate_dates_and_times(
-        %Ecto.Changeset{
-          valid?: true,
-          changes: %{
-            start_date: start_date,
-            start_time: start_time,
-            end_time: end_time,
-            end_date: end_date
-          }
-        } = changeset
-      )
-      when start_time != nil and end_time != nil do
+  defp validate_dates_and_times(
+         %Ecto.Changeset{
+           valid?: true,
+           changes: %{
+             start_date: start_date,
+             start_time: start_time,
+             end_time: end_time,
+             end_date: end_date
+           }
+         } = changeset
+       )
+       when start_time != nil and end_time != nil do
     case {Date.compare(end_date, start_date),
           Time.compare(end_time, start_time)} do
       {:eq, :lt} ->
@@ -64,12 +64,24 @@ defmodule Guildship.Guilds.CalendarEvent do
     end
   end
 
-  def validate_dates_and_times(
-        %Ecto.Changeset{
-          valid?: true,
-          changes: %{start_date: start_date, end_date: end_date}
-        } = changeset
-      ) do
+  defp validate_dates_and_times(
+         %Ecto.Changeset{
+           valid?: true,
+           changes: %{
+             start_time: %Time{}
+           }
+         } = changeset
+       ) do
+    changeset
+    |> validate_required([:end_time])
+  end
+
+  defp validate_dates_and_times(
+         %Ecto.Changeset{
+           valid?: true,
+           changes: %{start_date: start_date, end_date: end_date}
+         } = changeset
+       ) do
     case Date.compare(end_date, start_date) do
       :lt ->
         add_error(changeset, :end_date, "End date can't be before start date")
@@ -79,5 +91,5 @@ defmodule Guildship.Guilds.CalendarEvent do
     end
   end
 
-  def validate_dates_and_times(changeset), do: changeset
+  defp validate_dates_and_times(changeset), do: changeset
 end
