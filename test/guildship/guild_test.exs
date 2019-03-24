@@ -287,7 +287,8 @@ defmodule Guildship.GuildTest do
 
       guild = guild |> Repo.preload([:guild_memberships])
 
-      assert [%Guilds.Membership{user_id: ^user_id}] = guild.guild_memberships
+      assert [%Guilds.Membership{user_id: ^user_id, role: "admin"}] =
+               guild.guild_memberships
     end
   end
 end
