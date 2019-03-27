@@ -79,7 +79,37 @@ defmodule Guildship.GuildTest do
     test "can pin a thread" do
     end
 
+    test "regular users cannot pin a thread" do
+    end
+
+    test "moderators can pin a thread" do
+    end
+
+    test "guild admins can pin a thread" do
+    end
+
+    test "guildship admins cannot pin a thread" do
+    end
+
+    test "can create a pinned thread" do
+    end
+
     test "can lock a thread" do
+    end
+
+    test "regular users cannot lock a thread" do
+    end
+
+    test "moderators can lock a thread" do
+    end
+
+    test "guild admins can lock a thread" do
+    end
+
+    test "guildship admins cannot lock a thread" do
+    end
+
+    test "can create a locked thread" do
     end
 
     test "regular members cannot reply to a locked thread" do
