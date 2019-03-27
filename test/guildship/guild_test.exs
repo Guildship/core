@@ -56,6 +56,24 @@ defmodule Guildship.GuildTest do
     end
 
     test "when creating a thread, the body becomes the first reply" do
+      forum_category = insert(:forum_category)
+      user = insert(:user)
+
+      {:ok, forum_thread} =
+        Guilds.create_forum_thread(%{
+          forum_category_id: forum_category.id,
+          user_id: user.id,
+          title: "Test title!",
+          body: "Yo!!"
+        })
+
+      assert %Guilds.ForumThread{
+               forum_thread_replies: [
+                 %Guilds.ForumThreadReply{
+                   body: "Yo!!"
+                 }
+               ]
+             } = forum_thread |> Repo.preload([:forum_thread_replies])
     end
 
     test "can pin a thread" do

@@ -65,9 +65,26 @@ defmodule Guildship.Guilds do
   end
 
   def create_forum_thread(params) do
-    %ForumThread{}
-    |> ForumThread.new(params)
-    |> Repo.insert()
+    case Multi.new()
+         |> Multi.insert(:forum_thread, ForumThread.new(%ForumThread{}, params))
+         |> Multi.merge(fn %{forum_thread: forum_thread} ->
+           Multi.new()
+           |> Multi.insert(
+             :forum_thread_reply,
+             ForumThreadReply.new(%ForumThreadReply{}, %{
+               forum_thread_id: forum_thread.id,
+               user_id: forum_thread.user_id,
+               body: params.body
+             })
+           )
+         end)
+         |> Repo.transaction() do
+      {:ok, %{forum_thread: %ForumThread{} = forum_thread}} ->
+        {:ok, forum_thread}
+
+      {:error, error} ->
+        {:error, error}
+    end
   end
 
   def create_forum_thread_reply(params) do
