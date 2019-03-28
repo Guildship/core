@@ -351,8 +351,8 @@ defmodule Guildship.GuildTest do
     test "can edit an event" do
       event = insert(:calendar_event, title: "Unedited")
 
-      {:ok, %Guilds.CalendarEvent{title: "Edited"}} =
-        Guilds.edit_calendar_event(event, %{title: "Edited"})
+      assert {:ok, %Guilds.CalendarEvent{title: "Edited"}} =
+               Guilds.edit_calendar_event(event, %{title: "Edited"})
     end
 
     test "regular users can't edit an event" do
