@@ -65,6 +65,12 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
+  def edit_forum_category(%ForumCategory{} = forum_category, params) do
+    forum_category
+    |> ForumCategory.edit(params)
+    |> Repo.update()
+  end
+
   def create_forum_thread(params) do
     case Multi.new()
          |> Multi.insert(:forum_thread, ForumThread.new(%ForumThread{}, params))

@@ -22,4 +22,9 @@ defmodule Guildship.Guilds.ForumCategory do
     forum_category
     |> changeset(params)
   end
+
+  def edit(%ForumCategory{} = forum_category, params) do
+    forum_category
+    |> changeset(params)
+  end
 end

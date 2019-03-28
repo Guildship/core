@@ -23,6 +23,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "can edit a category" do
+      forum_category = insert(:forum_category, name: "Not Edited")
+
+      assert {:ok, %Guilds.ForumCategory{name: "Edited"}} =
+               Guilds.edit_forum_category(forum_category, %{name: "Edited"})
     end
 
     test "regular members cannot edit a category" do
