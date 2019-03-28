@@ -35,13 +35,13 @@ blocks:
           # Restore dependencies and compiled code
           - cache restore mix-deps-$SEMAPHORE_GIT_BRANCH-$(checksum mix.lock),mix-deps-$SEMAPHORE_GIT_BRANCH,mix-deps-master
           - cache restore mix-build-$SEMAPHORE_GIT_BRANCH-$(checksum mix.lock),mix-build-$SEMAPHORE_GIT_BRANCH,mix-build-master
-          - echo "PULL_REQUEST_NUMBER - $PULL_REQUEST_NUMBER"
-          - echo "REVISION - $REVISION"
-          - echo "BRANCH_NAME - $BRANCH_NAME"
-          - echo "SEMAPHORE_BUILD_NUMBER - $SEMAPHORE_BUILD_NUMBER"
       jobs:
         - name: Everything
           commands:
+            - echo "PULL_REQUEST_NUMBER - $PULL_REQUEST_NUMBER"
+            - echo "REVISION - $REVISION"
+            - echo "BRANCH_NAME - $BRANCH_NAME"
+            - echo "SEMAPHORE_BUILD_NUMBER - $SEMAPHORE_BUILD_NUMBER"
             - sem-service start postgres
             - mix coveralls.semaphore
       secrets:
