@@ -7,7 +7,7 @@ defmodule Guildship.Guilds.Membership do
   schema "guild_memberships" do
     belongs_to :guild, Guilds.Guild
     belongs_to :user, Accounts.User
-    field :role, :string
+    field :role, :string, default: "member"
 
     timestamps()
   end
