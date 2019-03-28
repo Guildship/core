@@ -6,6 +6,7 @@ defmodule Guildship.Guilds.ForumThread do
 
   schema "forum_threads" do
     field :title, :string
+    field :is_pinned, :boolean, default: false
     belongs_to :user, Accounts.User
     belongs_to :forum_category, Guilds.ForumCategory
     has_many :forum_thread_replies, Guilds.ForumThreadReply
@@ -15,11 +16,16 @@ defmodule Guildship.Guilds.ForumThread do
 
   def changeset(%ForumThread{} = forum_thread, params) do
     forum_thread
-    |> cast(params, [:title, :user_id, :forum_category_id])
+    |> cast(params, [:title, :user_id, :forum_category_id, :is_pinned])
     |> validate_required([:title, :user_id, :forum_category_id])
   end
 
   def new(%ForumThread{} = forum_thread, params) do
+    forum_thread
+    |> changeset(params)
+  end
+
+  def edit(%ForumThread{} = forum_thread, params) do
     forum_thread
     |> changeset(params)
   end

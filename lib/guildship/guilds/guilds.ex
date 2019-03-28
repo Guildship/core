@@ -87,6 +87,12 @@ defmodule Guildship.Guilds do
     end
   end
 
+  def pin_forum_thread(%ForumThread{} = thread) do
+    thread
+    |> ForumThread.edit(%{is_pinned: true})
+    |> Repo.update()
+  end
+
   def create_forum_thread_reply(params) do
     %ForumThreadReply{}
     |> ForumThreadReply.new(params)

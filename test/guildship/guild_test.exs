@@ -77,6 +77,12 @@ defmodule Guildship.GuildTest do
     end
 
     test "can pin a thread" do
+      forum_thread = insert(:forum_thread)
+
+      assert {:ok,
+              %Guilds.ForumThread{
+                is_pinned: true
+              }} = Guilds.pin_forum_thread(forum_thread)
     end
 
     test "regular users cannot pin a thread" do
