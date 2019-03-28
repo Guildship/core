@@ -16,6 +16,9 @@ defmodule Guildship.Guilds.Reaction do
     reaction
     |> cast(params, [:reactionable_id, :user_id, :emoji_name])
     |> validate_required([:reactionable_id, :user_id, :emoji_name])
+    |> unique_constraint(:emoji_name,
+      name: "guild_blog_posts_reactions_reactionable_id_user_id_emoji_name_i"
+    )
   end
 
   def new(%Reaction{} = reaction, params) do
