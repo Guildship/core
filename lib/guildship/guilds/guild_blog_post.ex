@@ -29,4 +29,9 @@ defmodule Guildship.Guilds.GuildBlogPost do
     blog_post
     |> changeset(params)
   end
+
+  def edit(%GuildBlogPost{} = blog_post, params) do
+    blog_post
+    |> changeset(params)
+  end
 end

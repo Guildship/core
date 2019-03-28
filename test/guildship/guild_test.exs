@@ -392,6 +392,13 @@ defmodule Guildship.GuildTest do
     end
 
     test "can edit a blog post" do
+      blog_post = insert(:guild_blog_post, title: "Unedited", body: "Unedited")
+
+      assert {:ok, %Guilds.GuildBlogPost{title: "Edited", body: "Edited"}} =
+               Guilds.edit_guild_blog_post(blog_post, %{
+                 title: "Edited",
+                 body: "Edited"
+               })
     end
 
     test "regular users can't edit a blog post" do

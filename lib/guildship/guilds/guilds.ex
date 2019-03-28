@@ -122,6 +122,12 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
+  def edit_guild_blog_post(%GuildBlogPost{} = blog_post, params) do
+    blog_post
+    |> GuildBlogPost.edit(params)
+    |> Repo.update()
+  end
+
   def delete_guild_blog_post(%GuildBlogPost{} = blog_post) do
     blog_post
     |> Repo.delete()
