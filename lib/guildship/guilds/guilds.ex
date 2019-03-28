@@ -96,14 +96,12 @@ defmodule Guildship.Guilds do
 
   def pin_forum_thread(%ForumThread{} = thread) do
     thread
-    |> ForumThread.edit(%{is_pinned: true})
-    |> Repo.update()
+    |> edit_forum_thread(%{is_pinned: true})
   end
 
   def lock_forum_thread(%ForumThread{} = thread) do
     thread
-    |> ForumThread.edit(%{is_locked: true})
-    |> Repo.update()
+    |> edit_forum_thread(%{is_locked: true})
   end
 
   def edit_forum_thread(%ForumThread{} = thread, params) do
