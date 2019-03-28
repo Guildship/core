@@ -38,10 +38,6 @@ blocks:
       jobs:
         - name: Everything
           commands:
-            - echo "PULL_REQUEST_NUMBER - $PULL_REQUEST_NUMBER"
-            - echo "REVISION - $REVISION"
-            - echo "BRANCH_NAME - $BRANCH_NAME"
-            - echo "SEMAPHORE_BUILD_NUMBER - $SEMAPHORE_BUILD_NUMBER"
             - sem-service start postgres
             - mix coveralls.semaphore
       secrets:
