@@ -405,10 +405,11 @@ defmodule Guildship.GuildTest do
       user = insert(:user)
       resource = insert(:guild_blog_post)
 
-      Guilds.add_reaction(resource, %{
-        user_id: user.id,
-        emoji_name: "boop"
-      })
+      {:ok, _} =
+        Guilds.add_reaction(resource, %{
+          user_id: user.id,
+          emoji_name: "boop"
+        })
 
       assert {:error, _} =
                Guilds.add_reaction(resource, %{
@@ -452,10 +453,11 @@ defmodule Guildship.GuildTest do
       user = insert(:user)
       resource = insert(:forum_thread_reply)
 
-      Guilds.add_reaction(resource, %{
-        user_id: user.id,
-        emoji_name: "boop"
-      })
+      {:ok, _} =
+        Guilds.add_reaction(resource, %{
+          user_id: user.id,
+          emoji_name: "boop"
+        })
 
       assert {:error, _} =
                Guilds.add_reaction(resource, %{
@@ -502,10 +504,11 @@ defmodule Guildship.GuildTest do
       user = insert(:user)
       resource = insert(:calendar_event)
 
-      Guilds.add_reaction(resource, %{
-        user_id: user.id,
-        emoji_name: "boop"
-      })
+      {:ok, _} =
+        Guilds.add_reaction(resource, %{
+          user_id: user.id,
+          emoji_name: "boop"
+        })
 
       assert {:error, _} =
                Guilds.add_reaction(resource, %{
