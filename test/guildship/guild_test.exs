@@ -368,6 +368,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "can delete an event" do
+      event = insert(:calendar_event)
+
+      assert {:ok, %Guilds.CalendarEvent{}} =
+               Guilds.delete_calendar_event(event)
     end
 
     test "regular users can't delete an event" do
