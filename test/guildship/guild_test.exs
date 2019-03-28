@@ -392,9 +392,11 @@ defmodule Guildship.GuildTest do
       assert {:ok,
               %Guilds.Reaction{
                 user_id: user_id,
-                reactionable_id: resource_id
+                reactionable_id: resource_id,
+                emoji_name: "boop"
               }} =
                Guilds.add_reaction(blog_post, %{
+                 emoji_name: "boop",
                  user_id: user.id
                })
     end
@@ -424,10 +426,12 @@ defmodule Guildship.GuildTest do
       assert {:ok,
               %Guilds.Reaction{
                 user_id: user_id,
-                reactionable_id: resource_id
+                reactionable_id: resource_id,
+                emoji_name: "thinking_face"
               }} =
                Guilds.add_reaction(forum_thread_reply, %{
-                 user_id: user.id
+                 user_id: user.id,
+                 emoji_name: "thinking_face"
                })
     end
 
@@ -459,10 +463,12 @@ defmodule Guildship.GuildTest do
       assert {:ok,
               %Guilds.Reaction{
                 user_id: user_id,
-                reactionable_id: resource_id
+                reactionable_id: resource_id,
+                emoji_name: "tada"
               }} =
                Guilds.add_reaction(calendar_event, %{
-                 user_id: user.id
+                 user_id: user.id,
+                 emoji_name: "tada"
                })
     end
 
