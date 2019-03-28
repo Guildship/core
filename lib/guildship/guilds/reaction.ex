@@ -19,6 +19,12 @@ defmodule Guildship.Guilds.Reaction do
     |> unique_constraint(:emoji_name,
       name: "guild_blog_posts_reactions_reactionable_id_user_id_emoji_name_i"
     )
+    |> unique_constraint(:emoji_name,
+      name: "forum_thread_replies_reactions_reactionable_id_user_id_emoji_na"
+    )
+    |> unique_constraint(:emoji_name,
+      name: "calendar_events_reactions_reactionable_id_user_id_emoji_name_in"
+    )
   end
 
   def new(%Reaction{} = reaction, params) do

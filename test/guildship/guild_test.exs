@@ -449,6 +449,19 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot create duplicate reaction to a forum thread reply" do
+      user = insert(:user)
+      resource = insert(:forum_thread_reply)
+
+      Guilds.add_reaction(resource, %{
+        user_id: user.id,
+        emoji_name: "boop"
+      })
+
+      assert {:error, _} =
+               Guilds.add_reaction(resource, %{
+                 user_id: user.id,
+                 emoji_name: "boop"
+               })
     end
 
     test "can remove a forum thread reply reaction" do
@@ -486,6 +499,19 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot create duplicate reaction to a calendar event" do
+      user = insert(:user)
+      resource = insert(:calendar_event)
+
+      Guilds.add_reaction(resource, %{
+        user_id: user.id,
+        emoji_name: "boop"
+      })
+
+      assert {:error, _} =
+               Guilds.add_reaction(resource, %{
+                 user_id: user.id,
+                 emoji_name: "boop"
+               })
     end
 
     test "can remove a calendar event reaction" do
