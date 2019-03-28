@@ -22,6 +22,12 @@ defmodule Guildship.AccountsTest do
                Accounts.promote_user_to_admin(user)
     end
 
+    test "cannot promote an admin to admin" do
+      user = insert(:user, type: "admin")
+
+      assert {:error, _msg} = Accounts.promote_user_to_admin(user)
+    end
+
     test "non-guildship admins can't promote a regular user to guildship admin" do
     end
 

@@ -39,6 +39,10 @@ defmodule Guildship.Accounts do
     |> edit_user(%{type: "admin"})
   end
 
+  def promote_user_to_admin(%User{type: "admin"}) do
+    {:error, "User is already an admin."}
+  end
+
   def edit_user(%User{} = user, params) do
     user
     |> User.edit(params)
