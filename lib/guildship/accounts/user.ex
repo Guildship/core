@@ -8,6 +8,7 @@ defmodule Guildship.Accounts.User do
 
   schema "users" do
     field :username, :string
+    field :type, :string, default: "user"
     has_many :credentials, Credential, on_delete: :delete_all
     has_many :flags, {"users_flags", Support.Flag}, foreign_key: :flaggable_id
     has_many :guild_memberships, Guilds.Membership, on_delete: :delete_all
@@ -17,8 +18,8 @@ defmodule Guildship.Accounts.User do
 
   defp changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:username])
-    |> validate_required([:username])
+    |> cast(attrs, [:username, :type])
+    |> validate_required([:username, :type])
     |> unique_constraint(:username)
     |> validate_username()
   end
