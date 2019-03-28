@@ -110,6 +110,11 @@ defmodule Guildship.Guilds do
     |> Repo.update()
   end
 
+  def delete_forum_thread(%ForumThread{} = thread) do
+    thread
+    |> Repo.delete()
+  end
+
   def create_forum_thread_reply(params) do
     %ForumThreadReply{}
     |> ForumThreadReply.new(params)

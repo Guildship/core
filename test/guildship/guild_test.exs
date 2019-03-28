@@ -193,6 +193,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "can delete a thread" do
+      forum_thread = insert(:forum_thread)
+
+      assert {:ok, %Guilds.ForumThread{}} =
+               Guilds.delete_forum_thread(forum_thread)
     end
 
     test "regular members cannot delete threads" do
