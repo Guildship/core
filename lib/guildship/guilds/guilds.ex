@@ -106,6 +106,12 @@ defmodule Guildship.Guilds do
     |> Repo.update()
   end
 
+  def edit_forum_thread(%ForumThread{} = thread, params) do
+    thread
+    |> ForumThread.edit(params)
+    |> Repo.update()
+  end
+
   def create_forum_thread_reply(params) do
     %ForumThreadReply{}
     |> ForumThreadReply.new(params)

@@ -171,6 +171,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "can edit a thread" do
+      forum_thread = insert(:forum_thread, title: "Not Edited")
+
+      assert {:ok, %Guilds.ForumThread{title: "Edited"}} =
+               Guilds.edit_forum_thread(forum_thread, %{title: "Edited"})
     end
 
     test "regular members cannot edit a thread they didn't create" do
