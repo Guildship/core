@@ -407,6 +407,9 @@ defmodule Guildship.GuildTest do
     end
 
     test "can delete a blog post" do
+      blog_post = insert(:guild_blog_post)
+
+      assert {:ok, _} = Guilds.delete_guild_blog_post(blog_post)
     end
 
     test "regular users can't delete a blog post" do

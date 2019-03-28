@@ -122,6 +122,11 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
+  def delete_guild_blog_post(%GuildBlogPost{} = blog_post) do
+    blog_post
+    |> Repo.delete()
+  end
+
   def create_calendar_event(params) do
     %CalendarEvent{}
     |> CalendarEvent.new(params)
