@@ -166,6 +166,11 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
+  def remove_reaction(reaction) do
+    reaction
+    |> Repo.delete()
+  end
+
   def join_guild(params) do
     # You will always default to member when joining a guild
     %Membership{role: "member"}

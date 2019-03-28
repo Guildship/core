@@ -483,6 +483,16 @@ defmodule Guildship.GuildTest do
     end
 
     test "can remove a blog post reaction" do
+      resource = insert(:guild_blog_post)
+      user = insert(:user)
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{
+          emoji_name: "boop",
+          user_id: user.id
+        })
+
+      assert {:ok, %Guilds.Reaction{}} = Guilds.remove_reaction(reaction)
     end
 
     test "users who reacted to a blog post can remove their reaction" do
@@ -531,6 +541,16 @@ defmodule Guildship.GuildTest do
     end
 
     test "can remove a forum thread reply reaction" do
+      resource = insert(:forum_thread_reply)
+      user = insert(:user)
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{
+          emoji_name: "boop",
+          user_id: user.id
+        })
+
+      assert {:ok, %Guilds.Reaction{}} = Guilds.remove_reaction(reaction)
     end
 
     test "users who reacted to a forum thread reply can remove their reaction" do
@@ -582,6 +602,16 @@ defmodule Guildship.GuildTest do
     end
 
     test "can remove a calendar event reaction" do
+      resource = insert(:calendar_event)
+      user = insert(:user)
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{
+          emoji_name: "boop",
+          user_id: user.id
+        })
+
+      assert {:ok, %Guilds.Reaction{}} = Guilds.remove_reaction(reaction)
     end
 
     test "users who reacted to a calendar event can remove their reaction" do
