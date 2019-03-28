@@ -39,6 +39,11 @@ defmodule Guildship.Guilds.CalendarEvent do
     |> changeset(params)
   end
 
+  def edit(%CalendarEvent{} = calendar_event, params) do
+    calendar_event
+    |> changeset(params)
+  end
+
   defp validate_dates_and_times(
          %Ecto.Changeset{
            valid?: true,

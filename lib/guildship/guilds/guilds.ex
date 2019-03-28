@@ -149,6 +149,12 @@ defmodule Guildship.Guilds do
     |> Repo.insert()
   end
 
+  def edit_calendar_event(%CalendarEvent{} = calendar_event, params) do
+    calendar_event
+    |> CalendarEvent.edit(params)
+    |> Repo.update()
+  end
+
   def add_reaction(resource, params) do
     build_assoc(resource, :reactions)
     |> Reaction.new(params)
