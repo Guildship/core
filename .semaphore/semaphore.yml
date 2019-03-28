@@ -39,6 +39,6 @@ blocks:
         - name: Everything
           commands:
             - sem-service start postgres
-            - mix coveralls.semaphore
+            - mix coveralls.semaphore --verbose
       secrets:
         - name: coveralls
