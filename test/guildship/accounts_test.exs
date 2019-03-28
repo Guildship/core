@@ -16,6 +16,10 @@ defmodule Guildship.AccountsTest do
     end
 
     test "can promote a user to guildship admin" do
+      user = insert(:user, type: "user")
+
+      assert {:ok, %Accounts.User{type: "admin"}} =
+               Accounts.promote_user_to_admin(user)
     end
 
     test "non-guildship admins can't promote a regular user to guildship admin" do

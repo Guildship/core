@@ -34,6 +34,17 @@ defmodule Guildship.Accounts do
     Repo.get(User, id)
   end
 
+  def promote_user_to_admin(%User{type: "user"} = user) do
+    user
+    |> edit_user(%{type: "admin"})
+  end
+
+  def edit_user(%User{} = user, params) do
+    user
+    |> User.edit(params)
+    |> Repo.update()
+  end
+
   def login_with_email(email, password) do
     query =
       from c in Credential,

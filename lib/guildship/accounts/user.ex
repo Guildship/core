@@ -16,17 +16,22 @@ defmodule Guildship.Accounts.User do
     timestamps()
   end
 
-  defp changeset(%User{} = user, attrs) do
+  defp changeset(%User{} = user, params) do
     user
-    |> cast(attrs, [:username, :type])
+    |> cast(params, [:username, :type])
     |> validate_required([:username, :type])
     |> unique_constraint(:username)
     |> validate_username()
   end
 
-  def new(%User{} = user, attrs \\ %{}) do
+  def new(%User{} = user, params) do
     user
-    |> changeset(attrs)
+    |> changeset(params)
+  end
+
+  def edit(%User{} = user, params) do
+    user
+    |> changeset(params)
   end
 
   defp validate_username(%Ecto.Changeset{valid?: true} = changeset) do
