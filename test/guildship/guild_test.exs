@@ -98,6 +98,21 @@ defmodule Guildship.GuildTest do
     end
 
     test "can create a pinned thread" do
+      forum_category = insert(:forum_category)
+      user = insert(:user)
+
+      assert {:ok,
+              %Guilds.ForumThread{
+                title: "test",
+                is_pinned: true
+              }} =
+               Guilds.create_forum_thread(%{
+                 forum_category_id: forum_category.id,
+                 user_id: user.id,
+                 title: "test",
+                 is_pinned: true,
+                 body: "test"
+               })
     end
 
     test "can lock a thread" do
@@ -122,6 +137,21 @@ defmodule Guildship.GuildTest do
     end
 
     test "can create a locked thread" do
+      forum_category = insert(:forum_category)
+      user = insert(:user)
+
+      assert {:ok,
+              %Guilds.ForumThread{
+                title: "test",
+                is_locked: true
+              }} =
+               Guilds.create_forum_thread(%{
+                 forum_category_id: forum_category.id,
+                 user_id: user.id,
+                 title: "test",
+                 is_locked: true,
+                 body: "test"
+               })
     end
 
     test "regular members cannot reply to a locked thread" do
