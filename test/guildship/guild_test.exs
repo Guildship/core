@@ -1,6 +1,6 @@
 defmodule Guildship.GuildTest do
   use Guildship.DataCase, async: true
-  alias Guildship.{Accounts, Guilds}
+  alias Guildship.Guilds
 
   describe "Guild Forum" do
     test "can create forum categories" do
@@ -455,8 +455,8 @@ defmodule Guildship.GuildTest do
 
       assert {:ok,
               %Guilds.Reaction{
-                user_id: user_id,
-                reactionable_id: resource_id,
+                user_id: ^user_id,
+                reactionable_id: ^resource_id,
                 emoji_name: "boop"
               }} =
                Guilds.add_reaction(blog_post, %{
@@ -513,8 +513,8 @@ defmodule Guildship.GuildTest do
 
       assert {:ok,
               %Guilds.Reaction{
-                user_id: user_id,
-                reactionable_id: resource_id,
+                user_id: ^user_id,
+                reactionable_id: ^resource_id,
                 emoji_name: "thinking_face"
               }} =
                Guilds.add_reaction(forum_thread_reply, %{
@@ -574,8 +574,8 @@ defmodule Guildship.GuildTest do
 
       assert {:ok,
               %Guilds.Reaction{
-                user_id: user_id,
-                reactionable_id: resource_id,
+                user_id: ^user_id,
+                reactionable_id: ^resource_id,
                 emoji_name: "tada"
               }} =
                Guilds.add_reaction(calendar_event, %{
