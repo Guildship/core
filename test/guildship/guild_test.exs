@@ -39,6 +39,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "can delete a category" do
+      forum_category = insert(:forum_category)
+
+      assert {:ok, %Guilds.ForumCategory{}} =
+               Guilds.delete_forum_category(forum_category)
     end
 
     test "can create a thread in a category" do

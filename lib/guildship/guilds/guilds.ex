@@ -71,6 +71,11 @@ defmodule Guildship.Guilds do
     |> Repo.update()
   end
 
+  def delete_forum_category(%ForumCategory{} = forum_category) do
+    forum_category
+    |> Repo.delete()
+  end
+
   def create_forum_thread(params) do
     case Multi.new()
          |> Multi.insert(:forum_thread, ForumThread.new(%ForumThread{}, params))
