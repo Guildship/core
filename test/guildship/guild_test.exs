@@ -101,6 +101,12 @@ defmodule Guildship.GuildTest do
     end
 
     test "can lock a thread" do
+      forum_thread = insert(:forum_thread)
+
+      assert {:ok,
+              %Guilds.ForumThread{
+                is_locked: true
+              }} = Guilds.lock_forum_thread(forum_thread)
     end
 
     test "regular users cannot lock a thread" do

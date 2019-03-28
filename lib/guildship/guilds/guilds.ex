@@ -93,6 +93,12 @@ defmodule Guildship.Guilds do
     |> Repo.update()
   end
 
+  def lock_forum_thread(%ForumThread{} = thread) do
+    thread
+    |> ForumThread.edit(%{is_locked: true})
+    |> Repo.update()
+  end
+
   def create_forum_thread_reply(params) do
     %ForumThreadReply{}
     |> ForumThreadReply.new(params)
