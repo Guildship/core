@@ -49,7 +49,8 @@ defmodule Guildship.Umbrella.MixProject do
       {:ex_machina, "~> 2.3"},
       {:argon2_elixir, "~> 2.0"},
       {:faker, "~> 0.11.2"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:bodyguard, "~> 2.2.3"}
     ]
   end
 
