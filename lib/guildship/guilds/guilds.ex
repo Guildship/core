@@ -16,7 +16,7 @@ defmodule Guildship.Guilds do
     Reaction
   }
 
-  alias Guildship.Repo
+  alias Guildship.{Repo, Accounts}
 
   def data do
     Dataloader.Ecto.new(Repo, query: &query/2)
@@ -66,6 +66,11 @@ defmodule Guildship.Guilds do
           guild: %Guild{id: guild_id}
         }
       ),
+      do: true
+
+  def authorize(:remove_reaction, %Accounts.User{id: user_id}, %{
+        reaction: %Reaction{user_id: user_id}
+      }),
       do: true
 
   def authorize(_, _, _), do: false

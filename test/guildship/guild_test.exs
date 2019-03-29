@@ -1,6 +1,6 @@
 defmodule Guildship.GuildTest do
   use Guildship.DataCase, async: true
-  alias Guildship.Guilds
+  alias Guildship.{Repo, Guilds}
 
   describe "Guild Forum" do
     test "can create forum categories" do
@@ -622,15 +622,64 @@ defmodule Guildship.GuildTest do
     end
 
     test "users who reacted to a blog post can remove their reaction" do
+      resource = insert(:guild_blog_post)
+      user = insert(:user)
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :remove_reaction, user,
+                 reaction: reaction
+               )
     end
 
     test "guild moderators cannot remove someone else's reaction to a blog post" do
+      resource = insert(:guild_blog_post)
+      user = insert(:user)
+
+      %{user: moderator} =
+        insert(:guild_membership, role: "moderator")
+        |> Repo.preload([:user])
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, moderator,
+                 reaction: reaction
+               )
     end
 
     test "guild admins cannot remove someone else's reaction to a blog post" do
+      resource = insert(:guild_blog_post)
+      user = insert(:user)
+
+      %{user: admin} =
+        insert(:guild_membership, role: "admin")
+        |> Repo.preload([:user])
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, admin,
+                 reaction: reaction
+               )
     end
 
     test "guildship admins cannot remove someone else's reaction to a blog post" do
+      resource = insert(:guild_blog_post)
+      user = insert(:user)
+      guildship_admin = insert(:user, type: "admin")
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, guildship_admin,
+                 reaction: reaction
+               )
     end
 
     test "can react to a forum thread reply" do
