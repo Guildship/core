@@ -16,7 +16,7 @@ config :guildship, GuildshipWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-config :logger, level: :debug
+config :logger, level: :info
 
 config :argon2_elixir,
   t_cost: 1,

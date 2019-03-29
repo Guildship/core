@@ -211,6 +211,14 @@ defmodule Guildship.Guilds do
     |> Repo.delete()
   end
 
+  def add_reaction(
+        %ForumThreadReply{
+          forum_thread: %ForumThread{is_locked: true}
+        },
+        _params
+      ),
+      do: {:error, "Cannot react to a reply in a locked thread"}
+
   def add_reaction(resource, params) do
     build_assoc(resource, :reactions)
     |> Reaction.new(params)

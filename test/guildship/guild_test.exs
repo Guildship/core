@@ -741,6 +741,18 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot react to a forum thread reply if the thread is locked" do
+      forum_thread = insert(:forum_thread, is_locked: true)
+
+      forum_thread_reply =
+        insert(:forum_thread_reply, forum_thread: forum_thread)
+
+      user = insert(:user)
+
+      assert {:error, _} =
+               Guilds.add_reaction(forum_thread_reply, %{
+                 emoji_name: "thang",
+                 user_id: user.id
+               })
     end
 
     test "can react to a calendar event" do
