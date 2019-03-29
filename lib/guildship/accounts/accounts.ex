@@ -2,6 +2,7 @@ defmodule Guildship.Accounts do
   @moduledoc """
   Context for Identity-related things.
   """
+  @behaviour Bodyguard.Policy
 
   import Ecto.Query
   alias Ecto.Multi
@@ -15,6 +16,14 @@ defmodule Guildship.Accounts do
   def query(queryable, _params) do
     queryable
   end
+
+  def authorize(:delete_user, _, %{user: %User{type: "admin"}}), do: false
+
+  def authorize(action, %User{type: "admin"}, _)
+      when action in [:promote_user_to_admin, :delete_user, :edit_user],
+      do: true
+
+  def authorize(_, _, _), do: false
 
   def create_user(args) do
     %{username: username, credential: credential_params} = args
