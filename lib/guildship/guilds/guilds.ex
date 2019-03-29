@@ -38,15 +38,16 @@ defmodule Guildship.Guilds do
       do: true
 
   def authorize(
-        :delete_calendar_event,
+        action,
         %Membership{role: role, guild_id: guild_id},
         %{calendar_event: %CalendarEvent{guild_id: guild_id}}
       )
-      when role in ["admin", "moderator"],
+      when action in [:delete_calendar_event, :edit_calendar_event] and
+             role in ["admin", "moderator"],
       do: true
 
   def authorize(action, %Accounts.User{type: "admin"}, _)
-      when action in [:delete_calendar_event],
+      when action in [:delete_calendar_event, :edit_calendar_event],
       do: true
 
   def authorize(

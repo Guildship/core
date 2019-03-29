@@ -482,15 +482,39 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users can't edit an event" do
+      membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_calendar_event, membership)
     end
 
     test "guild moderators can edit an event" do
+      guild = insert(:guild)
+      calendar_event = insert(:calendar_event, guild: guild)
+      membership = insert(:guild_membership, guild: guild, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_calendar_event, membership,
+                 calendar_event: calendar_event
+               )
     end
 
     test "guild admins can edit an event" do
+      guild = insert(:guild)
+      calendar_event = insert(:calendar_event, guild: guild)
+      membership = insert(:guild_membership, guild: guild, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_calendar_event, membership,
+                 calendar_event: calendar_event
+               )
     end
 
     test "guildship admins can edit an event" do
+      guildship_admin = insert(:user, type: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_calendar_event, guildship_admin)
     end
 
     test "can delete an event" do
