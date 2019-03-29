@@ -70,5 +70,18 @@ defmodule Guildship.AccountsTest do
                  user: another_guildship_admin
                )
     end
+
+    test "guildship users cannot get all users" do
+      regular_user = insert(:user, type: "user")
+
+      assert false == Bodyguard.permit?(Accounts, :get_all_users, regular_user)
+    end
+
+    test "guildship admins can get all users" do
+      guildship_admin = insert(:user, type: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Accounts, :get_all_users, guildship_admin)
+    end
   end
 end

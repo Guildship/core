@@ -20,7 +20,12 @@ defmodule Guildship.Accounts do
   def authorize(:delete_user, _, %{user: %User{type: "admin"}}), do: false
 
   def authorize(action, %User{type: "admin"}, _)
-      when action in [:promote_user_to_admin, :delete_user, :edit_user],
+      when action in [
+             :get_all_users,
+             :promote_user_to_admin,
+             :delete_user,
+             :edit_user
+           ],
       do: true
 
   def authorize(_, _, _), do: false
