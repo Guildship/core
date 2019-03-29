@@ -29,6 +29,8 @@ blocks:
       env_vars:
         - name: MIX_ENV
           value: test
+        - name: COVERALLS_SERVICE_NAME
+          value: semaphore
       prologue:
         commands:
           - checkout
@@ -42,6 +44,6 @@ blocks:
             - echo SEMAPHORE_GIT_SHA $SEMAPHORE_GIT_SHA
             - echo "git log -1 --pretty=format:%s" `git log -1 --pretty=format:%s`
             - sem-service start postgres
-            - mix coveralls.post --name "semaphore" --branch $SEMAPHORE_GIT_BRANCH --sha $SEMAPHORE_GIT_SHA --message `git log -1 --pretty=format:%s`
+            - mix coveralls.post --branch $SEMAPHORE_GIT_BRANCH --sha $SEMAPHORE_GIT_SHA --message `git log -1 --pretty=format:%s`
       secrets:
         - name: coveralls
