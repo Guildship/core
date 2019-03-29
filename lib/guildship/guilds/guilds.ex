@@ -35,6 +35,16 @@ defmodule Guildship.Guilds do
            ],
       do: true
 
+  def authorize(
+        :reply_to_thread,
+        %Membership{role: "moderator", guild_id: guild_id},
+        %{
+          forum_thread: %ForumThread{is_locked: true},
+          guild: %Guild{id: guild_id}
+        }
+      ),
+      do: true
+
   def authorize(action, %Membership{role: "admin"}, _)
       when action in [
              :create_forum_category,
@@ -42,6 +52,16 @@ defmodule Guildship.Guilds do
              :pin_forum_thread,
              :lock_forum_thread
            ],
+      do: true
+
+  def authorize(
+        :reply_to_thread,
+        %Membership{role: "admin", guild_id: guild_id},
+        %{
+          forum_thread: %ForumThread{is_locked: true},
+          guild: %Guild{id: guild_id}
+        }
+      ),
       do: true
 
   def authorize(_, _, _), do: false

@@ -225,12 +225,45 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular members cannot reply to a locked thread" do
+      %{forum_category: %{guild_id: guild_id}} =
+        thread = insert(:forum_thread, is_locked: true)
+
+      guild = Guilds.get_guild_by_id(guild_id)
+      membership = insert(:guild_membership, role: "member", guild: guild)
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :reply_to_thread, membership,
+                 guild: guild,
+                 forum_thread: thread
+               )
     end
 
     test "guild moderators can reply to locked threads" do
+      %{forum_category: %{guild_id: guild_id}} =
+        thread = insert(:forum_thread, is_locked: true)
+
+      guild = Guilds.get_guild_by_id(guild_id)
+      membership = insert(:guild_membership, role: "moderator", guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :reply_to_thread, membership,
+                 guild: guild,
+                 forum_thread: thread
+               )
     end
 
     test "guild admins can reply to locked threads" do
+      %{forum_category: %{guild_id: guild_id}} =
+        thread = insert(:forum_thread, is_locked: true)
+
+      guild = Guilds.get_guild_by_id(guild_id)
+      membership = insert(:guild_membership, role: "admin", guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :reply_to_thread, membership,
+                 guild: guild,
+                 forum_thread: thread
+               )
     end
 
     test "guildship admins can reply to locked threads" do
