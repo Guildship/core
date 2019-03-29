@@ -501,15 +501,45 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users can't delete an event" do
+      membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :delete_calendar_event, membership)
     end
 
     test "guild moderators can delete an event" do
+      guild = insert(:guild)
+      calendar_event = insert(:calendar_event, guild: guild)
+      membership = insert(:guild_membership, role: "moderator", guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :delete_calendar_event, membership,
+                 calendar_event: calendar_event
+               )
     end
 
     test "guild admins can delete an event" do
+      guild = insert(:guild)
+      calendar_event = insert(:calendar_event, guild: guild)
+      membership = insert(:guild_membership, role: "admin", guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :delete_calendar_event, membership,
+                 calendar_event: calendar_event
+               )
     end
 
     test "guildship admins can delete an event" do
+      guildship_admin = insert(:user, type: "admin")
+      calendar_event = insert(:calendar_event)
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :delete_calendar_event,
+                 guildship_admin,
+                 calendar_event: calendar_event
+               )
     end
   end
 
