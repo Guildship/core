@@ -26,7 +26,9 @@ defmodule Guildship.Guilds do
     queryable
   end
 
-  def authorize(action, %Membership{role: "moderator"}, _)
+  def authorize(action, %Membership{role: "moderator", guild_id: guild_id}, %{
+        guild_id: guild_id
+      })
       when action in [
              :create_forum_category,
              :edit_forum_category,
@@ -45,7 +47,9 @@ defmodule Guildship.Guilds do
       ),
       do: true
 
-  def authorize(action, %Membership{role: "admin"}, _)
+  def authorize(action, %Membership{role: "admin", guild_id: guild_id}, %{
+        guild_id: guild_id
+      })
       when action in [
              :create_forum_category,
              :edit_forum_category,

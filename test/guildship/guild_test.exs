@@ -27,24 +27,28 @@ defmodule Guildship.GuildTest do
     end
 
     test "can create a forum category if a guild moderator" do
-      guild_membership = insert(:guild_membership, role: "moderator")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "moderator")
 
       assert true ==
                Bodyguard.permit?(
                  Guilds,
                  :create_forum_category,
-                 guild_membership
+                 guild_membership,
+                 guild_id: guild_id
                )
     end
 
     test "can create a forum category if a guild admin" do
-      guild_membership = insert(:guild_membership, role: "admin")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "admin")
 
       assert true ==
                Bodyguard.permit?(
                  Guilds,
                  :create_forum_category,
-                 guild_membership
+                 guild_membership,
+                 guild_id: guild_id
                )
     end
 
@@ -56,24 +60,33 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular members cannot edit a category" do
-      guild_membership = insert(:guild_membership, role: "member")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "member")
 
       assert false ==
-               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guild moderators can edit a category" do
-      guild_membership = insert(:guild_membership, role: "moderator")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "moderator")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guild admins can edit a category" do
-      guild_membership = insert(:guild_membership, role: "admin")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "admin")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "can delete a category" do
@@ -132,24 +145,33 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users cannot pin a thread" do
-      guild_membership = insert(:guild_membership, role: "member")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "member")
 
       assert false ==
-               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "moderators can pin a thread" do
-      guild_membership = insert(:guild_membership, role: "moderator")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "moderator")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guild admins can pin a thread" do
-      guild_membership = insert(:guild_membership, role: "admin")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "admin")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guildship admins cannot pin a thread" do
@@ -183,24 +205,33 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users cannot lock a thread" do
-      guild_membership = insert(:guild_membership, role: "member")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "member")
 
       assert false ==
-               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "moderators can lock a thread" do
-      guild_membership = insert(:guild_membership, role: "moderator")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "moderator")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guild admins can lock a thread" do
-      guild_membership = insert(:guild_membership, role: "admin")
+      %{guild_id: guild_id} =
+        guild_membership = insert(:guild_membership, role: "admin")
 
       assert true ==
-               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership,
+                 guild_id: guild_id
+               )
     end
 
     test "guildship admins cannot lock a thread" do
