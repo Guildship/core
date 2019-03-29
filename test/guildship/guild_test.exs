@@ -56,12 +56,24 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular members cannot edit a category" do
+      guild_membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
     end
 
     test "guild moderators can edit a category" do
+      guild_membership = insert(:guild_membership, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
     end
 
     test "guild admins can edit a category" do
+      guild_membership = insert(:guild_membership, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_forum_category, guild_membership)
     end
 
     test "can delete a category" do

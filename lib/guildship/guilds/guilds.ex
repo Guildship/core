@@ -27,11 +27,11 @@ defmodule Guildship.Guilds do
   end
 
   def authorize(action, %Membership{role: "moderator"}, _)
-      when action in [:create_forum_category],
+      when action in [:create_forum_category, :edit_forum_category],
       do: true
 
   def authorize(action, %Membership{role: "admin"}, _)
-      when action in [:create_forum_category],
+      when action in [:create_forum_category, :edit_forum_category],
       do: true
 
   def authorize(_, _, _), do: false
