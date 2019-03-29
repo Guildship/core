@@ -729,15 +729,64 @@ defmodule Guildship.GuildTest do
     end
 
     test "users who reacted to a forum thread reply can remove their reaction" do
+      resource = insert(:forum_thread_reply)
+      user = insert(:user)
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :remove_reaction, user,
+                 reaction: reaction
+               )
     end
 
     test "guild moderators cannot remove someone else's reaction to a forum thread reply" do
+      resource = insert(:forum_thread_reply)
+      user = insert(:user)
+
+      %{user: moderator} =
+        insert(:guild_membership, role: "moderator")
+        |> Repo.preload([:user])
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, moderator,
+                 reaction: reaction
+               )
     end
 
     test "guild admins cannot remove someone else's reaction to a forum thread reply" do
+      resource = insert(:forum_thread_reply)
+      user = insert(:user)
+
+      %{user: moderator} =
+        insert(:guild_membership, role: "moderator")
+        |> Repo.preload([:user])
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, moderator,
+                 reaction: reaction
+               )
     end
 
     test "guildship admins cannot remove someone else's reaction to a forum thread reply" do
+      resource = insert(:forum_thread_reply)
+      user = insert(:user, type: "user")
+      admin = insert(:user, type: "admin")
+
+      {:ok, reaction} =
+        Guilds.add_reaction(resource, %{emoji_name: "boop", user_id: user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :remove_reaction, admin,
+                 reaction: reaction
+               )
     end
 
     test "cannot react to a forum thread reply if the thread is locked" do
