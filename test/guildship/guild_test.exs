@@ -132,12 +132,24 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users cannot pin a thread" do
+      guild_membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
     end
 
     test "moderators can pin a thread" do
+      guild_membership = insert(:guild_membership, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
     end
 
     test "guild admins can pin a thread" do
+      guild_membership = insert(:guild_membership, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :pin_forum_thread, guild_membership)
     end
 
     test "guildship admins cannot pin a thread" do
