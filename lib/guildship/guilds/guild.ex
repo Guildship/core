@@ -2,6 +2,7 @@ defmodule Guildship.Guilds.Guild do
   use Guildship.Schema
   import Ecto.Changeset
   alias __MODULE__
+  alias Guildship.Support
   alias Guildship.Guilds.{Membership, ForumCategory}
 
   schema "guilds" do
@@ -9,6 +10,7 @@ defmodule Guildship.Guilds.Guild do
     field :display_name, :string
     has_many :forum_categories, ForumCategory, on_delete: :delete_all
     has_many :guild_memberships, Membership, on_delete: :delete_all
+    has_many :flags, {"guilds_flags", Support.Flag}, foreign_key: :flaggable_id
 
     timestamps()
   end

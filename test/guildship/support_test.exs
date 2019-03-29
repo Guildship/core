@@ -57,6 +57,12 @@ defmodule Guildship.SupportTest do
     end
 
     test "can flag a guild" do
+      %{id: resource_id} = resource = insert(:guild)
+
+      assert {:ok,
+              %Support.Flag{
+                flaggable_id: ^resource_id
+              }} = Support.flag_content(resource)
     end
   end
 end
