@@ -1,4 +1,6 @@
 defmodule Guildship.Guilds do
+  @behaviour Bodyguard.Policy
+
   import Ecto
   alias __MODULE__
   alias Ecto.Multi
@@ -23,6 +25,16 @@ defmodule Guildship.Guilds do
   def query(queryable, _params) do
     queryable
   end
+
+  def authorize(action, %Membership{role: "moderator"}, _)
+      when action in [:create_forum_category],
+      do: true
+
+  def authorize(action, %Membership{role: "admin"}, _)
+      when action in [:create_forum_category],
+      do: true
+
+  def authorize(_, _, _), do: false
 
   def create_guild(%{user_id: user_id} = params) do
     case Multi.new()

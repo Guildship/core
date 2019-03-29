@@ -14,12 +14,38 @@ defmodule Guildship.GuildTest do
     end
 
     test "cannot create a forum category if just a guild member" do
+      regular_user = insert(:user)
+      guild = insert(:guild)
+
+      {:ok, _} =
+        Guilds.join_guild(%{guild_id: guild.id, user_id: regular_user.id})
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :create_forum_category, regular_user,
+                 guild: guild
+               )
     end
 
     test "can create a forum category if a guild moderator" do
+      guild_membership = insert(:guild_membership, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :create_forum_category,
+                 guild_membership
+               )
     end
 
     test "can create a forum category if a guild admin" do
+      guild_membership = insert(:guild_membership, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :create_forum_category,
+                 guild_membership
+               )
     end
 
     test "can edit a category" do
