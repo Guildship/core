@@ -30,7 +30,8 @@ defmodule Guildship.Guilds do
       when action in [
              :create_forum_category,
              :edit_forum_category,
-             :pin_forum_thread
+             :pin_forum_thread,
+             :lock_forum_thread
            ],
       do: true
 
@@ -38,7 +39,8 @@ defmodule Guildship.Guilds do
       when action in [
              :create_forum_category,
              :edit_forum_category,
-             :pin_forum_thread
+             :pin_forum_thread,
+             :lock_forum_thread
            ],
       do: true
 

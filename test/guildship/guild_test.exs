@@ -183,12 +183,24 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users cannot lock a thread" do
+      guild_membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
     end
 
     test "moderators can lock a thread" do
+      guild_membership = insert(:guild_membership, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
     end
 
     test "guild admins can lock a thread" do
+      guild_membership = insert(:guild_membership, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :lock_forum_thread, guild_membership)
     end
 
     test "guildship admins cannot lock a thread" do
