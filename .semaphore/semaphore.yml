@@ -38,6 +38,9 @@ blocks:
       jobs:
         - name: Everything
           commands:
+            - echo SEMAPHORE_GIT_BRANCH $SEMAPHORE_GIT_BRANCH
+            - echo SEMAPHORE_GIT_SHA $SEMAPHORE_GIT_SHA
+            - echo "git log -1 --pretty=format:%s" `git log -1 --pretty=format:%s`
             - sem-service start postgres
             - mix coveralls.post --name "semaphore" --branch $SEMAPHORE_GIT_BRANCH --sha $SEMAPHORE_GIT_SHA --message `git log -1 --pretty=format:%s`
       secrets:
