@@ -1,0 +1,16 @@
+{
+  "skip_files": [
+    "test",
+    "deps",
+    "lib/guildship.ex",
+    "lib/guildship_web.ex",
+    "lib/guildship_web/endpoint.ex",
+    "lib/guildship_web/gettext.ex",
+    "lib/guildship_web/views",
+    "lib/guildship/repo.ex",
+    "lib/guildship/schema.ex",
+    "lib/guildship_web/router.ex",
+    "lib/guildship_web/application.ex",
+    "lib/guildship_web/context.ex"
+  ]
+}
