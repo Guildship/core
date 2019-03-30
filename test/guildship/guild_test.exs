@@ -675,6 +675,10 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular users can't edit a blog post" do
+      membership = insert(:guild_membership, role: "member")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, membership)
     end
 
     test "guild moderators can edit a blog post in a guild they moderate" do
