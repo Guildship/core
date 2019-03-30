@@ -19,13 +19,17 @@ defmodule Guildship.AccountsTest do
       [%{id: user1_id}, %{id: user2_id}, %{id: user3_id}] =
         insert_list(3, :user)
 
-      all_users = Accounts.get_users()
-
       assert [
                %Accounts.User{id: ^user1_id},
                %Accounts.User{id: ^user2_id},
                %Accounts.User{id: ^user3_id}
-             ] = all_users
+             ] = Accounts.get_users()
+    end
+
+    test "can get a user by id" do
+      %{id: user_id} = insert(:user)
+
+      assert %Accounts.User{id: ^user_id} = Accounts.get_user_by_id(user_id)
     end
 
     test "can promote a user to guildship admin" do
