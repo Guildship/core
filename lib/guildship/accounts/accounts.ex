@@ -84,7 +84,7 @@ defmodule Guildship.Accounts do
   end
 
   defp check_password(credential, password) do
-    Comeonin.Argon2.checkpw(password, credential.password_hash)
+    Argon2.verify_pass(password, credential.password_hash)
   end
 
   def get_users() do

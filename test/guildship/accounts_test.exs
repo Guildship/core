@@ -32,6 +32,21 @@ defmodule Guildship.AccountsTest do
       assert %Accounts.User{id: ^user_id} = Accounts.get_user_by_id(user_id)
     end
 
+    test "can login with email and password" do
+      {:ok, %{id: user_id}} =
+        Accounts.create_user(%{
+          username: "test",
+          credential: %{
+            type: "email",
+            username: "bob@bob.bob",
+            password: "password"
+          }
+        })
+
+      assert {:ok, %Accounts.User{id: ^user_id}} =
+               Accounts.login_with_email("bob@bob.bob", "password")
+    end
+
     test "can promote a user to guildship admin" do
       user = insert(:user, type: "user")
 
