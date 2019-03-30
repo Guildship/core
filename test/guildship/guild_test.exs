@@ -361,6 +361,26 @@ defmodule Guildship.GuildTest do
                )
     end
 
+    test "guild admins can edit a thread in a guild they admin" do
+      user = insert(:user)
+      guild = insert(:guild)
+      forum_category = insert(:forum_category, guild: guild)
+
+      membership =
+        insert(:guild_membership, guild: guild, user: user, role: "admin")
+
+      %Guilds.Membership{user: other_user} =
+        insert(:guild_membership, guild: guild)
+
+      forum_thread =
+        insert(:forum_thread, forum_category: forum_category, user: other_user)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_forum_thread, membership,
+                 forum_thread: forum_thread
+               )
+    end
+
     test "guild admins cannot edit a thread in a guild they aren't admin of" do
       user = insert(:user)
       other_user = insert(:user)

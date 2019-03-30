@@ -95,13 +95,14 @@ defmodule Guildship.Guilds do
 
   def authorize(
         :edit_forum_thread,
-        %Membership{role: "moderator", guild_id: guild_id},
+        %Membership{role: role, guild_id: guild_id},
         %{
           forum_thread: %ForumThread{
             forum_category: %ForumCategory{guild_id: guild_id}
           }
         }
-      ),
+      )
+      when role in ["moderator", "admin"],
       do: true
 
   def authorize(:remove_reaction, %Accounts.User{id: user_id}, %{
