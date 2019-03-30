@@ -677,13 +677,58 @@ defmodule Guildship.GuildTest do
     test "regular users can't edit a blog post" do
     end
 
-    test "guild moderators can edit a blog post" do
+    test "guild moderators can edit a blog post in a guild they moderate" do
+      guild = insert(:guild)
+      membership = insert(:guild_membership, guild: guild, role: "moderator")
+      guild_blog_post = insert(:guild_blog_post, guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, membership,
+                 guild_blog_post: guild_blog_post
+               )
     end
 
-    test "guild admins can edit a blog post" do
+    test "guild moderators can's edit a blog post in a guild they don't moderate" do
+      guild = insert(:guild)
+      guild_blog_post = insert(:guild_blog_post, guild: guild)
+      membership = insert(:guild_membership, role: "moderator")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, membership,
+                 guild_blog_post: guild_blog_post
+               )
+    end
+
+    test "guild admins can edit a blog post in a guild they admin" do
+      guild = insert(:guild)
+      membership = insert(:guild_membership, guild: guild, role: "admin")
+      guild_blog_post = insert(:guild_blog_post, guild: guild)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, membership,
+                 guild_blog_post: guild_blog_post
+               )
+    end
+
+    test "guild admins can's edit a blog post in a guild they don't admin" do
+      guild = insert(:guild)
+      guild_blog_post = insert(:guild_blog_post, guild: guild)
+      membership = insert(:guild_membership, role: "admin")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, membership,
+                 guild_blog_post: guild_blog_post
+               )
     end
 
     test "guildship admins can edit a blog post" do
+      guildship_admin = insert(:user, type: "admin")
+      guild_blog_post = insert(:guild_blog_post)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_guild_blog_post, guildship_admin,
+                 guild_blog_post: guild_blog_post
+               )
     end
 
     test "can delete a blog post" do
@@ -695,10 +740,16 @@ defmodule Guildship.GuildTest do
     test "regular users can't delete a blog post" do
     end
 
-    test "guild moderators can delete a blog post" do
+    test "guild moderators can delete a blog post in a guild they moderate" do
     end
 
-    test "guild admins can delete a blog post" do
+    test "guild moderators can't delete a blog post in a guild they don't moderate" do
+    end
+
+    test "guild admins can delete a blog post in a guild they admin" do
+    end
+
+    test "guild admins can't delete a blog post in a guild they don't admin" do
     end
 
     test "guildship admins can delete a blog post" do
