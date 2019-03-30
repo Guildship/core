@@ -311,18 +311,72 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular members cannot edit a thread they didn't create" do
+      user = insert(:user)
+      other_user = insert(:user)
+      guild = insert(:guild)
+      forum_category = insert(:forum_category, guild: guild)
+      user_a_membership = insert(:guild_membership, guild: guild, user: user)
+
+      %Guilds.Membership{} =
+        insert(:guild_membership, guild: guild, user: other_user)
+
+      forum_thread =
+        insert(:forum_thread, forum_category: forum_category, user: other_user)
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_forum_thread, user_a_membership,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild moderators can edit a thread in a guild they moderate" do
+      user = insert(:user)
+      other_user = insert(:user)
+      guild = insert(:guild)
+      forum_category = insert(:forum_category, guild: guild)
+
+      membership =
+        insert(:guild_membership, guild: guild, user: user, role: "moderator")
+
+      insert(:guild_membership, guild: guild, user: other_user)
+
+      forum_thread =
+        insert(:forum_thread, forum_category: forum_category, user: other_user)
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :edit_forum_thread, membership,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild moderators cannot edit a thread in a guild they don't moderate" do
+      user = insert(:user)
+      other_user = insert(:user)
+      membership = insert(:guild_membership, user: user, role: "moderator")
+      forum_thread = insert(:forum_thread, user: other_user)
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_forum_thread, membership,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild admins cannot edit a thread in a guild they aren't admin of" do
+      user = insert(:user)
+      other_user = insert(:user)
+      membership = insert(:guild_membership, user: user, role: "admin")
+      forum_thread = insert(:forum_thread, user: other_user)
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :edit_forum_thread, membership,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guildship admins can edit threads" do
+      user = insert(:user, type: "admin")
+
+      assert true == Bodyguard.permit?(Guilds, :edit_forum_thread, user)
     end
 
     test "can delete a thread" do

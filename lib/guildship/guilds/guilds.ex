@@ -50,7 +50,8 @@ defmodule Guildship.Guilds do
       when action in [
              :delete_calendar_event,
              :edit_calendar_event,
-             :reply_to_thread
+             :reply_to_thread,
+             :edit_forum_thread
            ],
       do: true
 
@@ -81,6 +82,24 @@ defmodule Guildship.Guilds do
         %{
           forum_thread: %ForumThread{is_locked: true},
           guild: %Guild{id: guild_id}
+        }
+      ),
+      do: true
+
+  def authorize(:edit_forum_thread, %Membership{user_id: user_id}, %{
+        forum_thread: %ForumThread{
+          user_id: user_id
+        }
+      }),
+      do: true
+
+  def authorize(
+        :edit_forum_thread,
+        %Membership{role: "moderator", guild_id: guild_id},
+        %{
+          forum_thread: %ForumThread{
+            forum_category: %ForumCategory{guild_id: guild_id}
+          }
         }
       ),
       do: true
