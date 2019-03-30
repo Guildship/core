@@ -52,6 +52,7 @@ defmodule Guildship.Guilds do
              :edit_calendar_event,
              :reply_to_thread,
              :edit_forum_thread,
+             :delete_forum_thread,
              :edit_guild_blog_post,
              :delete_guild_blog_post
            ],
@@ -99,7 +100,7 @@ defmodule Guildship.Guilds do
       do: true
 
   def authorize(
-        :edit_forum_thread,
+        action,
         %Membership{role: role, guild_id: guild_id},
         %{
           forum_thread: %ForumThread{
@@ -107,7 +108,8 @@ defmodule Guildship.Guilds do
           }
         }
       )
-      when role in ["moderator", "admin"],
+      when action in [:edit_forum_thread, :delete_forum_thread] and
+             role in ["moderator", "admin"],
       do: true
 
   def authorize(

@@ -175,6 +175,9 @@ defmodule Guildship.GuildTest do
     end
 
     test "guildship admins cannot pin a thread" do
+      admin = insert(:user, type: "admin")
+
+      assert false == Bodyguard.permit?(Guilds, :pin_forum_thread, admin)
     end
 
     test "can create a pinned thread" do
@@ -235,6 +238,9 @@ defmodule Guildship.GuildTest do
     end
 
     test "guildship admins cannot lock a thread" do
+      admin = insert(:user, type: "admin")
+
+      assert false == Bodyguard.permit?(Guilds, :lock_forum_thread, admin)
     end
 
     test "can create a locked thread" do
@@ -407,21 +413,59 @@ defmodule Guildship.GuildTest do
     end
 
     test "regular members cannot delete threads" do
+      member = insert(:guild_membership, role: "member")
+
+      assert false == Bodyguard.permit?(Guilds, :delete_forum_thread, member)
     end
 
     test "guild moderators can delete threads" do
+      guild = insert(:guild)
+      forum_category = insert(:forum_category, guild: guild)
+      forum_thread = insert(:forum_thread, forum_category: forum_category)
+      moderator = insert(:guild_membership, guild: guild, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :delete_forum_thread, moderator,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild admins can delete threads" do
+      guild = insert(:guild)
+      forum_category = insert(:forum_category, guild: guild)
+      forum_thread = insert(:forum_thread, forum_category: forum_category)
+      admin = insert(:guild_membership, guild: guild, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(Guilds, :delete_forum_thread, admin,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild moderators cannot delete a thread in a guild they don't moderate" do
+      forum_thread = insert(:forum_thread)
+      moderator = insert(:guild_membership, role: "moderator")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :delete_forum_thread, moderator,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guild admins cannot delete a thread in a guild they aren't admin of" do
+      forum_thread = insert(:forum_thread)
+      admin = insert(:guild_membership, role: "admin")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :delete_forum_thread, admin,
+                 forum_thread: forum_thread
+               )
     end
 
     test "guildship admins can delete threads" do
+      admin = insert(:user, type: "admin")
+
+      assert true == Bodyguard.permit?(Guilds, :delete_forum_thread, admin)
     end
 
     test "can reply to a thread" do
