@@ -298,6 +298,9 @@ defmodule Guildship.GuildTest do
     end
 
     test "guildship admins can reply to locked threads" do
+      guildship_user = insert(:user, type: "admin")
+
+      assert true == Bodyguard.permit?(Guilds, :reply_to_thread, guildship_user)
     end
 
     test "can edit a thread" do
