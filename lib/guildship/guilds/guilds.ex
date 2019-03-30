@@ -74,7 +74,10 @@ defmodule Guildship.Guilds do
              :create_forum_category,
              :edit_forum_category,
              :pin_forum_thread,
-             :lock_forum_thread
+             :lock_forum_thread,
+             :promote_member_to_moderator,
+             :demote_moderator,
+             :kick_member
            ],
       do: true
 

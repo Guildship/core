@@ -1208,24 +1208,93 @@ defmodule Guildship.GuildTest do
     end
 
     test "guild moderators cannot make a regular member a moderator" do
+      moderator = insert(:guild_membership, role: "moderator")
+
+      assert false ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :promote_member_to_moderator,
+                 moderator
+               )
     end
 
     test "guild moderators cannot remove another moderator from the their guild" do
+      guild = insert(:guild)
+      moderator_a = insert(:guild_membership, guild: guild, role: "moderator")
+      moderator_b = insert(:guild_membership, guild: guild, role: "moderator")
+
+      assert false ==
+               Bodyguard.permit?(Guilds, :kick_member, moderator_a,
+                 guild_member: moderator_b
+               )
     end
 
     test "guild admins can promote regular members to moderator" do
+      guild = insert(:guild)
+      guild_admin = insert(:guild_membership, guild: guild, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :promote_member_to_moderator,
+                 guild_admin,
+                 %{guild_id: guild.id}
+               )
     end
 
     test "guild admins can demote moderators" do
+      guild = insert(:guild)
+      guild_admin = insert(:guild_membership, guild: guild, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :demote_moderator,
+                 guild_admin,
+                 %{guild_id: guild.id}
+               )
     end
 
     test "guild admins can remove regular members from the guild" do
+      guild = insert(:guild)
+      guild_admin = insert(:guild_membership, guild: guild, role: "admin")
+      regular_user = insert(:guild_membership, guild: guild, role: "member")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :kick_member,
+                 guild_admin,
+                 %{guild_id: regular_user.guild_id}
+               )
     end
 
     test "guild admins can remove guild moderators from the guild" do
+      guild = insert(:guild)
+      guild_admin = insert(:guild_membership, guild: guild, role: "admin")
+      moderator = insert(:guild_membership, guild: guild, role: "moderator")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :kick_member,
+                 guild_admin,
+                 %{guild_id: moderator.guild_id}
+               )
     end
 
     test "guild admins can remove guild admins from the guild" do
+      guild = insert(:guild)
+      guild_admin = insert(:guild_membership, guild: guild, role: "admin")
+      other_admin = insert(:guild_membership, guild: guild, role: "admin")
+
+      assert true ==
+               Bodyguard.permit?(
+                 Guilds,
+                 :kick_member,
+                 guild_admin,
+                 %{guild_id: other_admin.guild_id}
+               )
     end
   end
 end
