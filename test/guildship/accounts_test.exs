@@ -15,6 +15,30 @@ defmodule Guildship.AccountsTest do
                })
     end
 
+    test "you can't create a user with an invalid email" do
+      assert {:error, _, _, _} =
+               Accounts.create_user(%{
+                 username: "test",
+                 credential: %{
+                   type: "email",
+                   username: "not-a-real-email",
+                   password: "password"
+                 }
+               })
+    end
+
+    test "you can't create a user with password less than 8 characters" do
+      assert {:error, _, _, _} =
+               Accounts.create_user(%{
+                 username: "test",
+                 credential: %{
+                   type: "email",
+                   username: "test@test",
+                   password: "1234567"
+                 }
+               })
+    end
+
     test "can get all users" do
       [%{id: user1_id}, %{id: user2_id}, %{id: user3_id}] =
         insert_list(3, :user)
