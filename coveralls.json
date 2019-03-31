@@ -3,6 +3,7 @@
     "test",
     "deps",
     "lib/guildship.ex",
+    "lib/guildship/application.ex",
     "lib/guildship_web.ex",
     "lib/guildship_web/endpoint.ex",
     "lib/guildship_web/gettext.ex",
