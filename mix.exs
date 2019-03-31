@@ -10,6 +10,7 @@ defmodule Guildship.Umbrella.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      licenses: ["EUPL-1.2"],
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
@@ -32,6 +33,7 @@ defmodule Guildship.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps folder
   defp deps do
     [
+      {:ecto, "~> 3.0", override: true},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:hashids, "~> 2.0"},
@@ -43,6 +45,7 @@ defmodule Guildship.Umbrella.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:absinthe, "1.5.0-alpha.4", override: true},
       {:absinthe_plug, "~> 1.4"},
+      {:absinthe_relay, "1.5.0-alpha.0"},
       {:dataloader, "~> 1.0.4"},
       {:mix_test_watch, "~> 0.9", only: :dev, runtime: false},
       {:apollo_tracing, "~> 0.4"},
