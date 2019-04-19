@@ -4,4 +4,13 @@ defmodule GuildshipWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
   end
+
+  forward "/api", Absinthe.Plug,
+    json_codec: Phoenix.json_library(),
+    schema: GuildshipWeb.Schema
+
+  forward "/graphiql", Absinthe.Plug.GraphiQL,
+    schema: GuildshipWeb.Schema,
+    json_codec: Phoenix.json_library(),
+    interface: :playground
 end
