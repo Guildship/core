@@ -2,17 +2,21 @@ defmodule GuildshipWeb.Schema do
   use Absinthe.Schema
   use Absinthe.Relay.Schema, :modern
   use Absinthe.Relay.Schema.Notation, :modern
+  alias Guildship.{Repo, Guilds}
   alias GuildshipWeb.Resolvers
 
+  import_types Absinthe.Type.Custom
   connection(node_type: :guild)
 
   node object(:guild) do
     field :display_name, :string
+    field :created_at, :datetime
+    field :updated_at, :datetime
   end
 
   node interface do
     resolve_type fn
-      %Guildship.Guilds.Guild{}, _ -> :guild
+      %Guilds.Guild{}, _ -> :guild
       _, _ -> nil
     end
   end
@@ -21,7 +25,7 @@ defmodule GuildshipWeb.Schema do
     node field do
       resolve fn
         %{type: :guild, id: local_id}, _ ->
-          {:ok, Guildship.Repo.get(Guildship.Guilds.Guild, local_id)}
+          {:ok, Repo.get(Guilds.Guild, local_id)}
 
         _, _ ->
           {:error, "Unknown node"}
