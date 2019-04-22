@@ -3,13 +3,13 @@ defmodule GuildshipWeb.SchemaTest do
 
   describe "Guilds" do
     test "can fetch created guilds" do
-      insert(:guild)
+      insert(:guild, display_name: "test!")
       query = "
         query {
           guilds(first: 10) {
             edges {
               node {
-                id
+                displayName
               }
             }
           }
@@ -25,7 +25,7 @@ defmodule GuildshipWeb.SchemaTest do
                     "edges" => [
                       %{
                         "node" => %{
-                          "id" => _some_id
+                          "displayName" => "test!"
                         }
                       }
                     ]
