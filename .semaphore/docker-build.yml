@@ -1,0 +1,34 @@
+version: v1.0
+name: Docker build
+agent:
+  machine:
+    # Use a machine type with more RAM and CPU power for faster container
+    # builds:
+    type: e1-standard-4
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      secrets:
+        - name: my-dockerhub
+      jobs:
+        - name: Docker build guildship-core
+          commands:
+            - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+            - checkout
+            - docker pull guildship/core:latest || true
+            - docker build --cache-from guildship/core:latest -t guildship/core:$SEMAPHORE_WORKFLOW_ID .
+            - docker images
+            - docker push guildship/core:$SEMAPHORE_WORKFLOW_ID
+# The deployment pipeline is defined to run on manual approval from the UI.
+# Semaphore will the time and the name of the person who promotes each
+# deployment.
+#
+# You could, for example, add another promotion to a pipeline that
+# automatically deploys to a staging environment from branches named
+# after a certain pattern.
+# https://docs.semaphoreci.com/article/50-pipeline-yaml#promotions
+
+# promotions:
+#   - name: Deploy to Kubernetes
+#     pipeline_file: deploy-k8s.yml
