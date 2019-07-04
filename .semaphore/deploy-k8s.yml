@@ -13,7 +13,7 @@ blocks:
       # For info on creating secrets, see:
       # https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
       secrets:
-        - name: do-k8s
+        - name: digital-ocean-guildship-core-prod-creds
         - name: guildship-core-prod-secrets
 
       # Define an environment variable which configures kubectl:
