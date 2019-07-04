@@ -2,6 +2,10 @@
 
 FROM elixir:1.9-alpine AS backend
 
+# We need make for argon2
+RUN apk upgrade --no-cache && \
+  apk add --no-cache build-base
+
 RUN mix local.hex --force && mix local.rebar --force
 
 WORKDIR /app
