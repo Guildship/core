@@ -1,17 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: guildship-core
+  name: core
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: guildship-core
+        app: core
     spec:
       containers:
-        - name: guildship-core
-          # Using local image for demonstration
+        - name: core
           image: guildship/core:$SEMAPHORE_WORKFLOW_ID
           imagePullPolicy: Never
           ports:
