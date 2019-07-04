@@ -1,37 +1,17 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gs-core-pod
+  name: gs-core
 spec:
-  replicas: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gs-core
   template:
     metadata:
       labels:
         app: gs-core
     spec:
-      initContainers:
-        - name: gs-core-migrations
-          image: guildship/core:$SEMAPHORE_WORKFLOW_ID
-          args: ["eval", "Guildship.Release.seed()"]
-          env:
-            - name: PORT
-              value: "8000"
-            - name: SECRET_KEY_BASE
-              value: $GUILDSHIP_CORE_SECRET_KEY_BASE
-            - name: RELEASE_COOKIE
-              value: $GUILDSHIP_CORE_RELEASE_COOKIE
-            - name: DB_USERNAME
-              value: $GUILDSHIP_CORE_DB_USERNAME
-            - name: DB_PASSWORD
-              value: $GUILDSHIP_CORE_DB_PASSWORD
-            - name: DB_DATABASE
-              value: $GUILDSHIP_CORE_DB_DATABASE
-            - name: DB_HOSTNAME
-              value: $GUILDSHIP_CORE_DB_HOSTNAME
-            - name: MY_POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
       containers:
         - name: gs-core
           image: guildship/core:$SEMAPHORE_WORKFLOW_ID
@@ -58,3 +38,39 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+      initContainers:
+        - name: gs-core-migrations
+          image: guildship/core:$SEMAPHORE_WORKFLOW_ID
+          args: ["eval", "Guildship.Release.seed()"]
+          env:
+            - name: PORT
+              value: "8000"
+            - name: SECRET_KEY_BASE
+              value: $GUILDSHIP_CORE_SECRET_KEY_BASE
+            - name: RELEASE_COOKIE
+              value: $GUILDSHIP_CORE_RELEASE_COOKIE
+            - name: DB_USERNAME
+              value: $GUILDSHIP_CORE_DB_USERNAME
+            - name: DB_PASSWORD
+              value: $GUILDSHIP_CORE_DB_PASSWORD
+            - name: DB_DATABASE
+              value: $GUILDSHIP_CORE_DB_DATABASE
+            - name: DB_HOSTNAME
+              value: $GUILDSHIP_CORE_DB_HOSTNAME
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gs-core-lb
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8000
+  selector:
+    app: gs-core
+  type: LoadBalancer

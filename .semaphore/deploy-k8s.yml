@@ -36,9 +36,7 @@ blocks:
             - envsubst < k8s/deployment.yaml | tee k8s/deployment.yaml
 
             # Perform declarative deployment:
-            - kubectl apply -f k8s/service-headless.yaml
             - kubectl apply -f k8s/deployment.yaml
-            - kubectl apply -f k8s/balancer.yaml
 
   # If deployment to production succeeded, let's create a new version of
   # our `latest` Docker image.
