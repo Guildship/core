@@ -53,6 +53,9 @@ blocks:
       secrets:
         - name: digital-ocean-creds
       jobs:
+        - name: Download snap
+          commands:
+            - apt install snapd -y
         - name: Download doctl
           commands:
             - snap install doctl
