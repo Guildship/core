@@ -6,10 +6,10 @@ use Mix.Config
 
 # Configure your database
 config :guildship, Guildship.Repo,
-  username: System.get_env("DATABASE_POSTGRESQL_USERNAME") || "postgres",
-  password: System.get_env("DATABASE_POSTGRESQL_PASSWORD") || "postgres",
+  username: System.get_env("DB_USERNAME") || "postgres",
+  password: System.get_env("DB_PASSWORD") || "postgres",
   database: "guildship_test",
-  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  hostname: System.get_env("DB_HOSTNAME") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :guildship, GuildshipWeb.Endpoint,

@@ -5,8 +5,16 @@
 use Mix.Config
 
 config :guildship, GuildshipWeb.Endpoint,
-  http: [:inet6, port: System.get_env("PORT", "8000")],
-  url: [host: "guildship.co", port: 80]
+  http: [port: System.get_env("PORT", "8080")],
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  server: true
+
+config :guildship, Guildship.Repo,
+  username: System.get_env("DB_USERNAME", "postgres"),
+  password: System.get_env("DB_PASSWORD", "postgres"),
+  database: System.get_env("DB_DATABASE", "guildship"),
+  hostname: System.get_env("DB_HOSTNAME", "localhost"),
+  pool_size: 10
 
 config :logger, level: :info
 
