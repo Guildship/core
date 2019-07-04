@@ -48,6 +48,25 @@ blocks:
       secrets:
         - name: coveralls
 
+  - name: Talk to Prod K8s on DigitalOcean
+    task:
+      secrets:
+        - name: digital-ocean-creds
+      jobs:
+        - name: Download doctl
+          commands:
+            - snap install doctl
+        - name: Auth to DigitalOcean
+          commands:
+            - doctl auth init
+        - name: Get config from digitalocean
+          commands:
+            - doctl kubernetes cluster kubeconfig save guildship-core-prod
+        - name: Get nodes
+          commands:
+            - checkout
+            - kubectl get nodes
+
 promotions:
   - name: Dockerize
     pipeline_file: docker-build.yml
