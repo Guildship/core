@@ -1,18 +1,40 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: core
+  name: gs-core-pod
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: core
+        app: gs-core
     spec:
-      containers:
-        - name: core
+      initContainers:
+        - name: gs-core-migrations
           image: guildship/core:$SEMAPHORE_WORKFLOW_ID
-          imagePullPolicy: Never
+          args: ["eval", "Guildship.Release.seed()"]
+          env:
+            - name: PORT
+              value: "8000"
+            - name: SECRET_KEY_BASE
+              value: $GUILDSHIP_CORE_SECRET_KEY_BASE
+            - name: RELEASE_COOKIE
+              value: $GUILDSHIP_CORE_RELEASE_COOKIE
+            - name: DB_USERNAME
+              value: $GUILDSHIP_CORE_DB_USERNAME
+            - name: DB_PASSWORD
+              value: $GUILDSHIP_CORE_DB_PASSWORD
+            - name: DB_DATABASE
+              value: $GUILDSHIP_CORE_DB_DATABASE
+            - name: DB_HOSTNAME
+              value: $GUILDSHIP_CORE_DB_HOSTNAME
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      containers:
+        - name: gs-core
+          image: guildship/core:$SEMAPHORE_WORKFLOW_ID
           ports:
             - containerPort: 8000
           # Command to run against entrypoint

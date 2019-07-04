@@ -34,7 +34,7 @@ defmodule Guildship.Umbrella.MixProject do
   defp deps do
     [
       {:ecto, "~> 3.0", override: true},
-      {:ecto_sql, "~> 3.0"},
+      {:ecto_sql, "~> 3.1.6"},
       {:postgrex, ">= 0.0.0"},
       {:hashids, "~> 2.0"},
       {:phoenix, "~> 1.4"},
