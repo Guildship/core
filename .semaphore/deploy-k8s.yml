@@ -14,6 +14,7 @@ blocks:
       # https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
       secrets:
         - name: do-k8s
+        - name: guildship-core-prod-secrets
 
       # Define an environment variable which configures kubectl:
       env_vars:
@@ -32,10 +33,12 @@ blocks:
             # envsubst is a tool which will replace $SEMAPHORE_WORKFLOW_ID with
             # its current value. The same variable was used in docker-build.yml
             # pipeline to tag and push a container image.
-            - envsubst < deployment.yml | tee k8s/deployment.yml
+            - envsubst < k8s/deployment.yml | tee k8s/deployment.yml
 
             # Perform declarative deployment:
-            - kubectl apply -f k8s/deployment.yml
+            - kubectl apply -f k8s/service-headless.yaml
+            - kubectl apply -f k8s/deployment.yaml
+            - kubectl apply -f k8s/balancer.yaml
 
   # If deployment to production succeeded, let's create a new version of
   # our `latest` Docker image.

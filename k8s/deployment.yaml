@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: guildship-core
+  name: guildship/core
 spec:
   replicas: 2
   template:
@@ -12,7 +12,7 @@ spec:
       containers:
         - name: guildship-core
           # Using local image for demonstration
-          image: guildship-core:latest
+          image: guildship/core:$SEMAPHORE_WORKFLOW_ID
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
@@ -22,9 +22,17 @@ spec:
             - name: PORT
               value: "8000"
             - name: SECRET_KEY_BASE
-              value: "not-a-secret"
+              value: $GUILDSHIP_CORE_PROD_SECRET_KEY_BASE
             - name: RELEASE_COOKIE
-              value: "monster"
+              value: $GUILDSHIP_CORE_PROD_RELEASE_COOKIE
+            - name: DB_USERNAME
+              value: $GUILDSHIP_CORE_PROD_DB_USERNAME
+            - name: DB_PASSWORD
+              value: $GUILDSHIP_CORE_PROD_DB_PASSWORD
+            - name: DB_DATABASE
+              value: $GUILDSHIP_CORE_PROD_DB_DATABASE
+            - name: DB_HOSTNAME
+              value: $GUILDSHIP_CORE_PROD_DB_HOSTNAME
             - name: MY_POD_IP
               valueFrom:
                 fieldRef:
