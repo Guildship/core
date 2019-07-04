@@ -5,8 +5,7 @@
 use Mix.Config
 
 config :guildship, GuildshipWeb.Endpoint,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  http: [:inet6, port: System.get_env("PORT", "8000")],
+  url: [host: "guildship.co", port: 80]
 
 config :logger, level: :info

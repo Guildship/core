@@ -4,22 +4,8 @@
 # the umbrella root.
 use Mix.Config
 
-hashid_alphabet =
-  "_-" <>
-    "1234567890" <>
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" <>
-    "abcdefghijklmnopqrstuvwxyz"
-
 config :guildship,
-  ecto_repos: [Guildship.Repo],
-  hashid_alphabet: hashid_alphabet,
-  hashid_min_length: 4,
-  # NOTE: SALT CANNOT BE REALLY LONG
-  # https://github.com/ivanakimov/hashids.js/issues/37
-  #
-  # With the alphabet we have (ALPHA / NUMERIC), it seems best to
-  # make the length of the salt 21 characters
-  hashid_salt: "7Ue9x18vLAOiN8PuWiYEJ"
+  ecto_repos: [Guildship.Repo]
 
 # Configures the endpoint
 config :guildship, GuildshipWeb.Endpoint,
