@@ -22,17 +22,17 @@ spec:
             - name: PORT
               value: "8000"
             - name: SECRET_KEY_BASE
-              value: $GUILDSHIP_CORE_PROD_SECRET_KEY_BASE
+              value: $GUILDSHIP_CORE_SECRET_KEY_BASE
             - name: RELEASE_COOKIE
-              value: $GUILDSHIP_CORE_PROD_RELEASE_COOKIE
+              value: $GUILDSHIP_CORE_RELEASE_COOKIE
             - name: DB_USERNAME
-              value: $GUILDSHIP_CORE_PROD_DB_USERNAME
+              value: $GUILDSHIP_CORE_DB_USERNAME
             - name: DB_PASSWORD
-              value: $GUILDSHIP_CORE_PROD_DB_PASSWORD
+              value: $GUILDSHIP_CORE_DB_PASSWORD
             - name: DB_DATABASE
-              value: $GUILDSHIP_CORE_PROD_DB_DATABASE
+              value: $GUILDSHIP_CORE_DB_DATABASE
             - name: DB_HOSTNAME
-              value: $GUILDSHIP_CORE_PROD_DB_HOSTNAME
+              value: $GUILDSHIP_CORE_DB_HOSTNAME
             - name: MY_POD_IP
               valueFrom:
                 fieldRef:
