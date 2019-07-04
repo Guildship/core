@@ -55,10 +55,10 @@ blocks:
       jobs:
         - name: Download snap
           commands:
-            - apt install snapd -y
+            - sudo apt install snapd -y
         - name: Download doctl
           commands:
-            - snap install doctl
+            - sudo snap install doctl
         - name: Auth to DigitalOcean
           commands:
             - doctl auth init
