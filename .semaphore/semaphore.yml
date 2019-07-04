@@ -49,7 +49,7 @@ blocks:
         - name: coveralls
 
   - name: Build
-      task:
+    task:
       env_vars:
         - name: MIX_ENV
           value: prod

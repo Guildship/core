@@ -23,8 +23,8 @@ config :libcluster,
     k8s: [
       strategy: Elixir.Cluster.Strategy.Kubernetes.DNS,
       config: [
-        service: "parking-service-headless",
-        application_name: "parking",
+        service: "guildship-core-service-headless",
+        application_name: "guildship-core",
         polling_interval: 3_000
       ]
     ]
