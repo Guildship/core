@@ -9,3 +9,5 @@ config :guildship, GuildshipWeb.Endpoint,
   url: [host: "guildship.co", port: 80]
 
 config :logger, level: :info
+
+config :libcluster, topologies: []
