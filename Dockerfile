@@ -2,10 +2,6 @@
 
 FROM elixir:1.9-alpine AS backend
 
-# We need make for argon2
-RUN apk upgrade --no-cache && \
-  apk add --no-cache build-base
-
 RUN mix local.hex --force && mix local.rebar --force
 
 WORKDIR /app
@@ -17,8 +13,15 @@ COPY ./mix.* ./
 COPY config config
 COPY priv priv
 
-# Compile dependencies
-RUN mix do deps.get, deps.compile
+# Get deps
+RUN mix deps.get
+
+# We need make for argon2
+RUN apk upgrade --no-cache && \
+  apk add --no-cache make gcc libc-dev
+
+# Compile deps
+RUN mix deps.compile
 
 ### Packager
 
