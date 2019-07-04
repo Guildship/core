@@ -18,4 +18,14 @@ config :guildship, Guildship.Repo,
 
 config :logger, level: :info
 
-config :libcluster, topologies: []
+config :libcluster,
+  topologies: [
+    k8s: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes.DNS,
+      config: [
+        service: "parking-service-headless",
+        application_name: "parking",
+        polling_interval: 3_000
+      ]
+    ]
+  ]
