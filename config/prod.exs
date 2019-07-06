@@ -17,4 +17,10 @@ config :guildship, Guildship.Repo,
     System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship",
   pool_size: 10
 
-config :logger, level: :info
+config :timber,
+  api_key: System.get_env("TIMBER_API_KEY"),
+  source_id: System.get_env("TIMBER_SOURCE_ID")
+
+config :logger,
+  level: :info,
+  backends: [Timber.LoggerBackends.HTTP]
