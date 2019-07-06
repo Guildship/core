@@ -5,6 +5,8 @@ defmodule GuildshipWeb.Router do
     plug :accepts, ["json"]
   end
 
+  get("/health", GuildshipWeb.PageController, :health)
+
   forward "/api", Absinthe.Plug,
     json_codec: Phoenix.json_library(),
     schema: GuildshipWeb.Schema
