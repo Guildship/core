@@ -43,7 +43,7 @@ environment :prod do
         :"GZUAPxTBG1]F%gaBG6.|Fxqpi^]dVX>:AFn^YxR/RY%KE1ys/l6$cd3}8r4h$B4E"
 
   set config_providers: [
-        {Mix.Releases.Config.Providers.Elixir,
+        {Distillery.Releases.Config.Providers.Elixir,
          ["${RELEASE_ROOT_DIR}/etc/config.exs"]}
       ]
 
