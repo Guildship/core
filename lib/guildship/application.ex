@@ -8,7 +8,6 @@ defmodule Guildship.Application do
 
   def start(_type, _args) do
     children = [
-      {Cluster.Supervisor, [topologies, [name: Guildship.ClusterSupervisor]]},
       Guildship.Repo,
       Endpoint
     ]
