@@ -10,10 +10,7 @@ config :guildship, GuildshipWeb.Endpoint,
   server: true
 
 config :guildship, Guildship.Repo,
-  username: System.get_env("DB_USERNAME") || "postgres",
-  password: System.get_env("DB_PASSWORD") || "postgres",
-  database: System.get_env("DB_DATABASE") || "guildship",
-  hostname: System.get_env("DB_HOSTNAME") || "localhost",
+  url: System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship"
   pool_size: 10
 
 config :logger, level: :info
