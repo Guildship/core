@@ -4,13 +4,4 @@
 # the umbrella root.
 use Mix.Config
 
-config :guildship, GuildshipWeb.Endpoint,
-  http: [port: System.get_env("PORT") || "8080"],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  server: true
-
-config :guildship, Guildship.Repo,
-  url: System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship"
-  pool_size: 10
-
 config :logger, level: :info
