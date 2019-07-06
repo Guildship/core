@@ -5,6 +5,11 @@ defmodule Guildship.Repo do
     pool_size: 10
 
   def init(_type, config) do
-    {:ok, Keyword.put(config, :url, System.get_env("DB_URL"))}
+    keywords =
+      config
+      |> Keyword.put(:url, System.get_env("DB_URL"))
+
+    {:ok, keywords}
+    |> IO.inspect()
   end
 end
