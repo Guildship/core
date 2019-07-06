@@ -5,7 +5,7 @@ defmodule Guildship.Umbrella.MixProject do
   def project do
     [
       app: :guildship,
-      version: "1.0.0",
+      version: "1.0.0-baby-steps",
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
