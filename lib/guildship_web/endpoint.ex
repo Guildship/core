@@ -32,7 +32,6 @@ defmodule GuildshipWeb.Endpoint do
 
   plug Timber.Plug.HTTPContext
   plug Timber.Plug.Event
-  plug Corsica, origins: "*"
-
+  plug CORSPlug, origin: ["*"]
   plug GuildshipWeb.Router
 end

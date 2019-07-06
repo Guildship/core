@@ -59,7 +59,7 @@ defmodule Guildship.Umbrella.MixProject do
       {:timber_ecto, "~> 2.0"},
       {:timber_phoenix, "~> 1.0"},
       {:timber_plug, "~> 1.1.0"},
-      {:corsica, "~> 1.1.2"}
+      {:cors_plug, "~> 2.0"}
     ]
   end
 
