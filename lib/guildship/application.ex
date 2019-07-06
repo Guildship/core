@@ -12,6 +12,15 @@ defmodule Guildship.Application do
       Endpoint
     ]
 
+    :ok =
+      :telemetry.attach(
+        "timber-ecto-query-handler",
+        [:guildship, :repo, :query],
+        &Timber.Ecto.handle_event/4,
+        # Only care about queries that exceed 1s
+        query_time_ms_threshold: 1_000
+      )
+
     opts = [strategy: :one_for_one, name: Guildship.Supervisor]
     Supervisor.start_link(children, opts)
   end

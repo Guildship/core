@@ -10,12 +10,14 @@ config :guildship, GuildshipWeb.Endpoint,
   url: [host: "localhost", port: System.get_env("PORT")],
   server: true,
   root: ".",
-  version: Application.spec(:guildship, :vsn)
+  version: Application.spec(:guildship, :vsn),
+  instrumenters: [Timber.Phoenix]
 
 config :guildship, Guildship.Repo,
   url:
     System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship",
-  pool_size: 10
+  pool_size: 10,
+  log: false
 
 config :timber,
   api_key: System.get_env("TIMBER_API_KEY"),

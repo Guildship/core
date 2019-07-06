@@ -55,7 +55,9 @@ defmodule Guildship.Umbrella.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:bodyguard, "~> 2.2.3"},
       {:distillery, "~> 2.1.1"},
-      {:timber, "~> 3.0"}
+      {:timber, "~> 3.1.2"},
+      {:timber_ecto, "~> 2.0"},
+      {:timber_phoenix, "~> 1.0"}
     ]
   end
 
