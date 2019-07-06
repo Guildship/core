@@ -47,22 +47,21 @@ blocks:
             - mix coveralls.post --branch $SEMAPHORE_GIT_BRANCH --sha $SEMAPHORE_GIT_SHA --message "$(git log -1 --pretty=format:%s)"
       secrets:
         - name: coveralls
+#   - name: Talk to Prod K8s on DigitalOcean
+#     task:
+#       secrets:
+#         - name: digital-ocean-guildship-core-prod-creds
+#       env_vars:
+#         - name: KUBECONFIG
+#           value: /home/semaphore/.kube/dok8s.yaml
+#       jobs:
+#         - name: Get nodes
+#           commands:
+#             - checkout
+#             - kubectl get nodes
 
-  - name: Talk to Prod K8s on DigitalOcean
-    task:
-      secrets:
-        - name: digital-ocean-guildship-core-prod-creds
-      env_vars:
-        - name: KUBECONFIG
-          value: /home/semaphore/.kube/dok8s.yaml
-      jobs:
-        - name: Get nodes
-          commands:
-            - checkout
-            - kubectl get nodes
-
-promotions:
-  - name: Dockerize
-    pipeline_file: docker-build.yml
-    auto_promote_on:
-      - result: passed
+# promotions:
+#   - name: Dockerize
+#     pipeline_file: docker-build.yml
+#     auto_promote_on:
+#       - result: passed

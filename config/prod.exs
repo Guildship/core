@@ -19,13 +19,4 @@ config :guildship, Guildship.Repo,
 config :logger, level: :info
 
 config :libcluster,
-  topologies: [
-    k8s: [
-      strategy: Elixir.Cluster.Strategy.Kubernetes.DNS,
-      config: [
-        service: "gs-core-service-headless",
-        application_name: "gs-core",
-        polling_interval: 3_000
-      ]
-    ]
-  ]
+  topologies: []
