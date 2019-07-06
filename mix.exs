@@ -53,8 +53,7 @@ defmodule Guildship.Umbrella.MixProject do
       {:argon2_elixir, "~> 2.0"},
       {:faker, "~> 0.11.2"},
       {:excoveralls, "~> 0.10", only: :test},
-      {:bodyguard, "~> 2.2.3"},
-      {:libcluster, "~> 3.1.0"}
+      {:bodyguard, "~> 2.2.3"}
     ]
   end
 

@@ -7,8 +7,6 @@ defmodule Guildship.Application do
   alias GuildshipWeb.Endpoint
 
   def start(_type, _args) do
-    topologies = Application.get_env(:libcluster, :topologies)
-
     children = [
       {Cluster.Supervisor, [topologies, [name: Guildship.ClusterSupervisor]]},
       Guildship.Repo,

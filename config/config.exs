@@ -24,7 +24,4 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :libcluster,
-  topologies: []
-
 import_config "#{Mix.env()}.exs"

@@ -17,6 +17,3 @@ config :guildship, Guildship.Repo,
   pool_size: 10
 
 config :logger, level: :info
-
-config :libcluster,
-  topologies: []
