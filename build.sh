@@ -19,6 +19,4 @@ mix distillery.release --env=prod --no-tar
 
 echo "Linking release $APP_NAME:$APP_VSN to _render/"
 
-mix ecto.setup
-
 ln -sf "_build/$MIX_ENV/rel/$APP_NAME" _render
