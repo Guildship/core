@@ -5,7 +5,7 @@ default_secret_key_base = :crypto.strong_rand_bytes(43) |> Base.encode64()
 
 config :guildship, GuildshipWeb.Endpoint,
   http: [port: port],
-  url: [host: "localhost", port: port],
+  url: [host: "guildship.co", port: port],
   sever: true,
   root: ".",
   version: Application.spec(:guildship, :vsn),
