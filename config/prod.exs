@@ -4,4 +4,9 @@
 # the umbrella root.
 use Mix.Config
 
+config :guildship, Guildship.Repo,
+  url:
+    System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship",
+  pool_size: 10
+
 config :logger, level: :info
