@@ -47,4 +47,4 @@ WORKDIR /app
 
 COPY --from=packager /app/_build/prod/rel/guildship .
 
-ENTRYPOINT [ "./bin/guildship" ]
+ENTRYPOINT [ "./bin/guildship", "start" ]
