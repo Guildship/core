@@ -1,5 +1,6 @@
 defmodule GuildshipWeb.Schema do
   use Absinthe.Schema
+  use ApolloTracing
   use Absinthe.Relay.Schema, :modern
   use Absinthe.Relay.Schema.Notation, :modern
   alias Guildship.{Repo, Guilds}
@@ -9,6 +10,7 @@ defmodule GuildshipWeb.Schema do
   connection(node_type: :guild)
 
   node object(:guild) do
+    meta :cache, max_age: 30
     field :display_name, :string
     field :created_at, :datetime
     field :updated_at, :datetime

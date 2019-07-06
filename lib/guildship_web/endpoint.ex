@@ -33,5 +33,8 @@ defmodule GuildshipWeb.Endpoint do
     signing_salt: "YvhD4wN1"
   )
 
+  plug(Timber.Plug.HTTPContext)
+  plug(Timber.Plug.Event)
+
   plug(GuildshipWeb.Router)
 end

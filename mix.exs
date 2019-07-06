@@ -57,7 +57,8 @@ defmodule Guildship.Umbrella.MixProject do
       {:distillery, "~> 2.1.1"},
       {:timber, "~> 3.1.2"},
       {:timber_ecto, "~> 2.0"},
-      {:timber_phoenix, "~> 1.0"}
+      {:timber_phoenix, "~> 1.0"},
+      {:timber_plug, "~> 1.1.0"}
     ]
   end
 
