@@ -1,8 +1,8 @@
 defmodule GuildshipWeb.Resolvers.Guilds do
   alias Guildship.Guilds
 
-  def guilds(_, args, _) do
-    with true do
+  def guilds(_, args, %{context: %{current_user: current_user}}) do
+    with true <- Bodyguard.permit?(Guilds, :get_guilds, current_user) do
       Absinthe.Relay.Connection.from_query(
         Guilds.Guild,
         &Guildship.Repo.all/1,
