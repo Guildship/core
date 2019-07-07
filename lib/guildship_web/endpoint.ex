@@ -13,6 +13,7 @@ defmodule GuildshipWeb.Endpoint do
 
   plug Plug.RequestId
   plug Plug.Logger
+  plug CORSPlug, origin: "*"
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -32,6 +33,5 @@ defmodule GuildshipWeb.Endpoint do
 
   plug Timber.Plug.HTTPContext
   plug Timber.Plug.Event
-  plug CORSPlug, origin: ["*"]
   plug GuildshipWeb.Router
 end
