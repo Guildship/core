@@ -28,5 +28,6 @@ config :logger,
   backends: [Timber.LoggerBackends.HTTP]
 
 config :argon2_elixir,
-  t_cost: 8,
-  m_cost: 16
+  parallelism: 2,
+  t_cost: 4,
+  m_cost: 15
