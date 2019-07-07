@@ -3,7 +3,7 @@ defmodule GuildshipWeb.Schema do
   use ApolloTracing
   use Absinthe.Relay.Schema, :modern
   use Absinthe.Relay.Schema.Notation, :modern
-  alias Guildship.{Repo, Guilds}
+  alias Guildship.{Guilds, Accounts}
   alias GuildshipWeb.Resolvers
 
   import_types Absinthe.Type.Custom
@@ -26,6 +26,7 @@ defmodule GuildshipWeb.Schema do
   node interface do
     resolve_type fn
       %Guilds.Guild{}, _ -> :guild
+      %Accounts.User{}, _ -> :user
       _, _ -> nil
     end
   end
@@ -34,7 +35,10 @@ defmodule GuildshipWeb.Schema do
     node field do
       resolve fn
         %{type: :guild, id: local_id}, _ ->
-          {:ok, Repo.get(Guilds.Guild, local_id)}
+          {:ok, Guilds.get_guild_by_id(local_id)}
+
+        %{type: :user, id: local_id}, _ ->
+          {:ok, Accounts.get_user_by_id(local_id)}
 
         _, _ ->
           {:error, "Unknown node"}
@@ -48,15 +52,29 @@ defmodule GuildshipWeb.Schema do
   end
 
   mutation do
-    payload field :login_with_email_and_password do
+    payload field :create_user_with_email_and_password do
       input do
-        field :email, :string
-        field :password, :string
+        field :username, non_null(:string)
+        field :email, non_null(:string)
+        field :password, non_null(:string)
       end
 
       output do
-        field :user, :user
-        field :token, :string
+        field :user, non_null(:user)
+      end
+
+      resolve &Resolvers.Accounts.create_user_with_email_and_password/3
+    end
+
+    payload field :login_with_email_and_password do
+      input do
+        field :email, non_null(:string)
+        field :password, non_null(:string)
+      end
+
+      output do
+        field :user, non_null(:user)
+        field :token, non_null(:string)
       end
 
       resolve &Resolvers.Accounts.login_with_email_and_password/3
@@ -64,11 +82,11 @@ defmodule GuildshipWeb.Schema do
 
     payload field :create_guild do
       input do
-        field :display_name, :string
+        field :display_name, non_null(:string)
       end
 
       output do
-        field :display_name, :string
+        field :guild, non_null(:guild)
       end
 
       resolve &Resolvers.Guilds.create_guild/3

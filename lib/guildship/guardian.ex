@@ -11,10 +11,10 @@ defmodule Guildship.Guardian do
     # found in the `"sub"` key. In `above subject_for_token/2` we returned
     # the resource id so here we'll rely on that to look it up.
     id = claims["sub"]
-    resource = Guildship.Accounts.get_user_by_id(id)
+    resource = Guildship.Accounts.get_user_by_id(id |> String.to_integer())
 
     case resource do
-      {:ok, resource} -> {:ok, resource}
+      %Guildship.Accounts.User{} -> {:ok, resource}
       _ -> {:error, "Could not get resource from claims"}
     end
   end

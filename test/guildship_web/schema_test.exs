@@ -2,6 +2,31 @@ defmodule GuildshipWeb.SchemaTest do
   use GuildshipWeb.AbsintheCase, async: true
 
   describe "Accounts" do
+    test "can create a user with email/password" do
+      query = """
+        mutation {
+          createUserWithEmailAndPassword(input: {username: "sean", email: "test@test.test", password: "testpassword"}) {
+            user {
+              id
+              username
+            }
+          }
+        }
+      """
+
+      assert {:ok,
+              %{
+                data: %{
+                  "createUserWithEmailAndPassword" => %{
+                    "user" => %{
+                      "id" => _some_id,
+                      "username" => "sean"
+                    }
+                  }
+                }
+              }} = run(query)
+    end
+
     test "cannot log in with email/password if logged in" do
       user = insert(:user)
 
@@ -64,7 +89,9 @@ defmodule GuildshipWeb.SchemaTest do
       query = """
         mutation {
           createGuild(input: {displayName: "test!"}) {
-            displayName
+            guild {
+              displayName
+            }
           }
         }
       """
@@ -80,7 +107,9 @@ defmodule GuildshipWeb.SchemaTest do
       query = """
         mutation {
           createGuild(input: {displayName: "test!"}) {
-            displayName
+            guild {
+              displayName
+            }
           }
         }
       """
@@ -91,7 +120,9 @@ defmodule GuildshipWeb.SchemaTest do
               %{
                 data: %{
                   "createGuild" => %{
-                    "displayName" => "test!"
+                    "guild" => %{
+                      "displayName" => "test!"
+                    }
                   }
                 }
               }} = actual

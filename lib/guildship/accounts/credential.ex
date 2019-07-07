@@ -17,6 +17,9 @@ defmodule Guildship.Accounts.Credential do
     credential
     |> cast(params, [:user_id, :type, :username, :password])
     |> validate_required([:type, :username, :user_id])
+    |> unique_constraint(:username,
+      name: "account_credentials_type_username_index"
+    )
     |> validate_email()
     |> validate_password()
   end
