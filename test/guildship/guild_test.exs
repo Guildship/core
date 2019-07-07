@@ -2,6 +2,20 @@ defmodule Guildship.GuildTest do
   use Guildship.DataCase, async: true
   alias Guildship.{Repo, Guilds}
 
+  describe "Guilds" do
+    test "cannot get guild list if regular user" do
+      regular_user = insert(:user)
+
+      assert false == Bodyguard.permit?(Guilds, :get_guilds, regular_user)
+    end
+
+    test "can get guild list if admin" do
+      admin_user = insert(:user, type: "admin")
+
+      assert true == Bodyguard.permit?(Guilds, :get_guilds, admin_user)
+    end
+  end
+
   describe "Guild Forum" do
     test "can create forum categories" do
       guild = insert(:guild)

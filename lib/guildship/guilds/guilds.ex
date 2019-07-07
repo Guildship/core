@@ -48,6 +48,7 @@ defmodule Guildship.Guilds do
 
   def authorize(action, %Accounts.User{type: "admin"}, _)
       when action in [
+             :get_guilds,
              :delete_calendar_event,
              :edit_calendar_event,
              :reply_to_thread,
