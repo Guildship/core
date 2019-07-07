@@ -3,17 +3,37 @@ defmodule GuildshipWeb.Schema do
   use ApolloTracing
   use Absinthe.Relay.Schema, :modern
   use Absinthe.Relay.Schema.Notation, :modern
+  import Absinthe.Resolution.Helpers
   alias Guildship.{Guilds, Accounts}
   alias GuildshipWeb.Resolvers
+
+  def context(ctx) do
+    loader =
+      Dataloader.new()
+      |> Dataloader.add_source(Accounts, Accounts.data())
+      |> Dataloader.add_source(Guilds, Guilds.data())
+
+    Map.put(ctx, :loader, loader)
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+  end
 
   import_types Absinthe.Type.Custom
   connection(node_type: :guild)
 
   node object(:guild) do
     meta :cache, max_age: 30
-    field :display_name, :string
-    field :created_at, :datetime
-    field :updated_at, :datetime
+    field :display_name, non_null(:string)
+    field :created_at, non_null(:datetime)
+    field :updated_at, non_null(:datetime)
+  end
+
+  node object(:guild_membership) do
+    field :role, non_null(:string)
+    field :guild, non_null(:guild), resolve: dataloader(Guilds)
+    field :user, non_null(:user), resolve: dataloader(Accounts)
   end
 
   node object(:user) do
@@ -21,12 +41,25 @@ defmodule GuildshipWeb.Schema do
     field :username, :string
     field :created_at, :datetime
     field :updated_at, :datetime
+
+    field :guild_memberships, list_of(:guild_membership),
+      resolve: fn %Accounts.User{} = user,
+                  args,
+                  %{context: %{current_user: current_user}} = ctx ->
+        with :ok <-
+               Bodyguard.permit(Guilds, :get_memberships, current_user,
+                 user: user
+               ) do
+          apply(dataloader(Guilds), [user, args, ctx])
+        end
+      end
   end
 
   node interface do
     resolve_type fn
       %Guilds.Guild{}, _ -> :guild
       %Accounts.User{}, _ -> :user
+      %Guilds.Membership{}, _ -> :guild_membership
       _, _ -> nil
     end
   end
@@ -40,6 +73,17 @@ defmodule GuildshipWeb.Schema do
         %{type: :user, id: local_id}, _ ->
           {:ok, Accounts.get_user_by_id(local_id)}
 
+        %{type: :guild_membership, id: local_id},
+        %{context: %{current_user: current_user}} ->
+          with membership <-
+                 Guilds.get_membership_by_id(local_id),
+               :ok <-
+                 Bodyguard.permit(Guilds, :get_membership, current_user,
+                   membership: membership
+                 ) do
+            {:ok, membership}
+          end
+
         _, _ ->
           {:error, "Unknown node"}
       end
@@ -48,6 +92,10 @@ defmodule GuildshipWeb.Schema do
     @desc "list guilds"
     connection field :guilds, node_type: :guild do
       resolve &Resolvers.Guilds.guilds/3
+    end
+
+    field :me, :user do
+      resolve &Resolvers.Accounts.me/3
     end
   end
 

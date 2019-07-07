@@ -40,6 +40,16 @@ defmodule Guildship.Guilds do
            ],
       do: true
 
+  def authorize(:get_memberships, %Accounts.User{id: user_id}, %{
+        user: %Accounts.User{id: user_id}
+      }),
+      do: true
+
+  def authorize(:get_membership, %Accounts.User{id: user_id}, %{
+        membership: %Membership{user_id: user_id}
+      }),
+      do: true
+
   def authorize(
         action,
         %Membership{role: role, guild_id: guild_id},
@@ -165,6 +175,10 @@ defmodule Guildship.Guilds do
 
   def get_forum_thread_by_id(id) do
     Repo.get(ForumThread, id)
+  end
+
+  def get_membership_by_id(id) do
+    Repo.get(Membership, id)
   end
 
   def create_forum_category(params) do

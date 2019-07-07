@@ -1,6 +1,14 @@
 defmodule GuildshipWeb.Resolvers.Accounts do
   alias Guildship.Accounts
 
+  def me(_, _args, %{context: %{current_user: %Accounts.User{} = user}}) do
+    {:ok, user}
+  end
+
+  def me(_, _, _) do
+    {:error, "Not logged in!"}
+  end
+
   def create_user_with_email_and_password(_, args, _) do
     case Accounts.create_user(%{
            username: args.username,

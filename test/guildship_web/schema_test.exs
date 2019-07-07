@@ -82,6 +82,49 @@ defmodule GuildshipWeb.SchemaTest do
 
       assert {:ok, _} = Guildship.Guardian.decode_and_verify(token)
     end
+
+    test "I can't do a me query if not logged in" do
+      query = """
+        query {
+          me {
+            username
+            createdAt
+            updatedAt
+          }
+        }
+      """
+
+      actual = run(query)
+
+      assert {:ok, %{errors: [_]}} = actual
+    end
+
+    test "I can get my account if logged in" do
+      user = insert(:user, username: "test")
+
+      query = """
+        query {
+          me {
+            username
+            createdAt
+            updatedAt
+          }
+        }
+      """
+
+      actual = run(query, context: %{current_user: user})
+
+      assert {:ok,
+              %{
+                data: %{
+                  "me" => %{
+                    "username" => "test",
+                    "createdAt" => _created_at,
+                    "updatedAt" => _updated_at
+                  }
+                }
+              }} = actual
+    end
   end
 
   describe "Guilds" do
