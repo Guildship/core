@@ -1,6 +1,62 @@
 defmodule GuildshipWeb.SchemaTest do
   use GuildshipWeb.AbsintheCase, async: true
 
+  describe "Accounts" do
+    test "cannot log in with email/password if logged in" do
+      user = insert(:user)
+
+      insert(:credential,
+        user: user,
+        username: "test@test.test",
+        password: "test"
+      )
+
+      query = """
+        mutation {
+          loginWithEmailAndPassword(input: {email: "bob@bob.bob", password: "test"}) {
+            token
+          }
+        }
+      """
+
+      actual = run(query, context: %{current_user: user})
+
+      assert {:ok,
+              %{
+                errors: [_]
+              }} = actual
+    end
+
+    test "can log in with email/password if not logged in" do
+      user = insert(:user)
+
+      insert(:credential,
+        user: user,
+        username: "test@test.test",
+        password_hash: Argon2.hash_pwd_salt("test")
+      )
+
+      query = """
+        mutation {
+          loginWithEmailAndPassword(input: {email: "test@test.test", password: "test"}) {
+            token
+          }
+        }
+      """
+
+      actual = run(query)
+
+      assert {:ok,
+              %{
+                data: %{
+                  "loginWithEmailAndPassword" => %{
+                    "token" => _some_token
+                  }
+                }
+              }} = actual
+    end
+  end
+
   describe "Guilds" do
     test "can't create a guild if not logged in" do
       query = """
@@ -11,7 +67,9 @@ defmodule GuildshipWeb.SchemaTest do
         }
       """
 
-      assert_raise FunctionClauseError, fn -> run(query) end
+      actual = run(query)
+
+      assert {:ok, %{errors: [_]}} = actual
     end
 
     test "can create a guild if logged in" do

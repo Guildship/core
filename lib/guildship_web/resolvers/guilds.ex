@@ -23,4 +23,6 @@ defmodule GuildshipWeb.Resolvers.Guilds do
         err
     end
   end
+
+  def create_guild(_, _, _), do: {:error, "Not logged in!"}
 end

@@ -41,6 +41,19 @@ defmodule GuildshipWeb.Schema do
   end
 
   mutation do
+    payload field :login_with_email_and_password do
+      input do
+        field :email, :string
+        field :password, :string
+      end
+
+      output do
+        field :token, :string
+      end
+
+      resolve &Resolvers.Accounts.login_with_email_and_password/3
+    end
+
     payload field :create_guild do
       input do
         field :display_name, :string
