@@ -10,4 +10,17 @@ defmodule GuildshipWeb.Resolvers.Guilds do
       )
     end
   end
+
+  def create_guild(_, args, %{context: %{current_user: current_user}}) do
+    case Bodyguard.permit(Guilds, :create_guild, current_user) do
+      :ok ->
+        Guilds.create_guild(%{
+          user_id: current_user.id,
+          display_name: args.display_name
+        })
+
+      err ->
+        err
+    end
+  end
 end

@@ -39,4 +39,18 @@ defmodule GuildshipWeb.Schema do
       resolve &Resolvers.Guilds.guilds/3
     end
   end
+
+  mutation do
+    payload field :create_guild do
+      input do
+        field :display_name, :string
+      end
+
+      output do
+        field :display_name, :string
+      end
+
+      resolve &Resolvers.Guilds.create_guild/3
+    end
+  end
 end

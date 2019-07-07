@@ -26,6 +26,9 @@ defmodule Guildship.Guilds do
     queryable
   end
 
+  def authorize(action, %Accounts.User{}, _) when action in [:create_guild],
+    do: true
+
   def authorize(action, %Membership{role: "moderator", guild_id: guild_id}, %{
         guild_id: guild_id
       })
