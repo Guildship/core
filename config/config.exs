@@ -15,6 +15,10 @@ config :guildship, GuildshipWeb.Endpoint,
   render_errors: [view: GuildshipWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: GuildshipWeb.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :guildship, Guildship.Guardian,
+  issuer: "guildship",
+  secret_key: "lTNegs78/QN3mC32AjFrdHt6FjRSyqbQb7bik0z9+ybDBoaiLW8wEcl5W4X63zNt"
+
 config :guildship, Guildship.Repo, migration_timestamps: [type: :utc_datetime]
 
 config :logger, :console,

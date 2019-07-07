@@ -46,14 +46,16 @@ defmodule GuildshipWeb.SchemaTest do
 
       actual = run(query)
 
-      assert {:ok,
-              %{
-                data: %{
-                  "loginWithEmailAndPassword" => %{
-                    "token" => _some_token
-                  }
-                }
-              }} = actual
+      {:ok,
+       %{
+         data: %{
+           "loginWithEmailAndPassword" => %{
+             "token" => token
+           }
+         }
+       }} = actual
+
+      assert {:ok, _} = Guildship.Guardian.decode_and_verify(token)
     end
   end
 

@@ -17,3 +17,7 @@ config :guildship, Guildship.Repo,
     System.get_env("DB_URL") || "ecto://postgres:postgres@localhost/guildship",
   pool_size: 10,
   log: false
+
+config :guildship, Guildship.Guardian,
+  issuer: "guildship",
+  secret_key: System.get_env("SECRET_KEY_BASE") || default_secret_key_base

@@ -16,6 +16,13 @@ defmodule GuildshipWeb.Schema do
     field :updated_at, :datetime
   end
 
+  node object(:user) do
+    meta :cache, max_age: 30
+    field :username, :string
+    field :created_at, :datetime
+    field :updated_at, :datetime
+  end
+
   node interface do
     resolve_type fn
       %Guilds.Guild{}, _ -> :guild
@@ -48,6 +55,7 @@ defmodule GuildshipWeb.Schema do
       end
 
       output do
+        field :user, :user
         field :token, :string
       end
 

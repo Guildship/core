@@ -33,5 +33,6 @@ defmodule GuildshipWeb.Endpoint do
 
   plug Timber.Plug.HTTPContext
   plug Timber.Plug.Event
+  plug GuildshipWeb.Context
   plug GuildshipWeb.Router
 end
