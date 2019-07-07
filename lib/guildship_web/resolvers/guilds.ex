@@ -11,6 +11,10 @@ defmodule GuildshipWeb.Resolvers.Guilds do
     end
   end
 
+  def guilds(_, _, _) do
+    {:error, "You must be logged in!"}
+  end
+
   def create_guild(_, args, %{context: %{current_user: current_user}}) do
     case Bodyguard.permit(Guilds, :create_guild, current_user) do
       :ok ->

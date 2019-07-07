@@ -128,6 +128,26 @@ defmodule GuildshipWeb.SchemaTest do
               }} = actual
     end
 
+    test "can't fetch guilds if not admin" do
+      insert(:guild)
+
+      query = """
+        query {
+          guilds(first: 10) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+      """
+
+      actual = run(query)
+
+      assert {:ok, %{errors: [_]}} = actual
+    end
+
     test "can fetch created guilds if admin" do
       admin_user = insert(:user, type: "admin")
       insert(:guild, display_name: "test!")
