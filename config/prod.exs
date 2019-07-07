@@ -30,4 +30,4 @@ config :logger,
 config :argon2_elixir,
   parallelism: 2,
   t_cost: 4,
-  m_cost: 15
+  m_cost: 16
