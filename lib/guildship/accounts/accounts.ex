@@ -84,7 +84,12 @@ defmodule Guildship.Accounts do
   end
 
   defp check_password(credential, password) do
-    Argon2.verify_pass(password, credential.password_hash)
+    task =
+      Task.async(fn ->
+        Argon2.verify_pass(password, credential.password_hash)
+      end)
+
+    Task.await(task, :infinity)
   end
 
   def get_users() do
