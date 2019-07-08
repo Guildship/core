@@ -244,6 +244,43 @@ defmodule GuildshipWeb.SchemaTest do
               }} = actual
     end
 
+    test "I can't join a guild if already joined" do
+      user = insert(:user)
+      guild = insert(:guild)
+      insert(:guild_membership, user: user, guild: guild)
+
+      guild_id = to_global_id(:guild, guild.id)
+
+      query = """
+        mutation JoinGuild($guildId: ID!) {
+          joinGuild(input: {guildId: $guildId}) {
+            guildMembership {
+              guild {
+                id
+              }
+              user {
+                id
+              }
+            }
+          }
+        }
+      """
+
+      actual =
+        run(query,
+          context: %{current_user: user},
+          variables: %{"guildId" => guild_id}
+        )
+
+      assert {:ok,
+              %{
+                data: %{
+                  "joinGuild" => nil
+                },
+                errors: [_]
+              }} = actual
+    end
+
     test "I can join a guild" do
       user = insert(:user)
       guild = insert(:guild)
@@ -268,7 +305,7 @@ defmodule GuildshipWeb.SchemaTest do
       actual =
         run(query,
           context: %{current_user: user},
-          variables: %{"guildId" => guild.id}
+          variables: %{"guildId" => guild_id}
         )
 
       assert {:ok,

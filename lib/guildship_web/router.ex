@@ -9,12 +9,10 @@ defmodule GuildshipWeb.Router do
 
   forward "/api", Absinthe.Plug,
     json_codec: Phoenix.json_library(),
-    schema: GuildshipWeb.Schema,
-    pipeline: {ApolloTracing.Pipeline, :plug}
+    schema: GuildshipWeb.Schema
 
   forward "/graphiql", Absinthe.Plug.GraphiQL,
     schema: GuildshipWeb.Schema,
     json_codec: Phoenix.json_library(),
-    pipeline: {ApolloTracing.Pipeline, :plug},
     interface: :playground
 end

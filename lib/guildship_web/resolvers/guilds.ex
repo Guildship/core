@@ -1,5 +1,6 @@
 defmodule GuildshipWeb.Resolvers.Guilds do
   alias Guildship.Guilds
+  import GuildshipWeb.AbsintheHelpers
 
   def guilds(_, args, %{context: %{current_user: current_user}}) do
     with :ok <- Bodyguard.permit(Guilds, :get_guilds, current_user) do
@@ -18,6 +19,8 @@ defmodule GuildshipWeb.Resolvers.Guilds do
   def join_guild(_, %{guild_id: guild_id}, %{
         context: %{current_user: current_user}
       }) do
+    {:ok, %{id: guild_id}} = from_global_id(guild_id)
+
     case Guildship.Guilds.join_guild(%{
            user_id: current_user.id,
            guild_id: guild_id

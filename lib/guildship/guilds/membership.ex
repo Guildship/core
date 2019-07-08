@@ -16,6 +16,9 @@ defmodule Guildship.Guilds.Membership do
     membership
     |> cast(params, [:guild_id, :user_id, :role])
     |> validate_required([:guild_id, :user_id])
+    |> unique_constraint(:user_id,
+      name: "guild_memberships_user_id_guild_id_index"
+    )
   end
 
   def new(%Membership{} = membership, params) do

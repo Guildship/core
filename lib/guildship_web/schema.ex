@@ -1,9 +1,9 @@
 defmodule GuildshipWeb.Schema do
   use Absinthe.Schema
-  use ApolloTracing
   use Absinthe.Relay.Schema, :modern
   use Absinthe.Relay.Schema.Notation, :modern
   import Absinthe.Resolution.Helpers
+  import GuildshipWeb.AbsintheHelpers
   alias Guildship.{Guilds, Accounts}
   alias GuildshipWeb.Resolvers
 
@@ -66,7 +66,7 @@ defmodule GuildshipWeb.Schema do
 
   query do
     node field do
-      resolve fn
+      resolve_safe fn
         %{type: :guild, id: local_id}, _ ->
           {:ok, Guilds.get_guild_by_id(local_id)}
 
@@ -91,11 +91,11 @@ defmodule GuildshipWeb.Schema do
 
     @desc "list guilds"
     connection field :guilds, node_type: :guild do
-      resolve &Resolvers.Guilds.guilds/3
+      resolve_safe &Resolvers.Guilds.guilds/3
     end
 
     field :me, :user do
-      resolve &Resolvers.Accounts.me/3
+      resolve_safe &Resolvers.Accounts.me/3
     end
   end
 
@@ -111,7 +111,7 @@ defmodule GuildshipWeb.Schema do
         field :user, non_null(:user)
       end
 
-      resolve &Resolvers.Accounts.create_user_with_email_and_password/3
+      resolve_safe &Resolvers.Accounts.create_user_with_email_and_password/3
     end
 
     payload field :login_with_email_and_password do
@@ -125,7 +125,7 @@ defmodule GuildshipWeb.Schema do
         field :token, non_null(:string)
       end
 
-      resolve &Resolvers.Accounts.login_with_email_and_password/3
+      resolve_safe &Resolvers.Accounts.login_with_email_and_password/3
     end
 
     payload field :join_guild do
@@ -137,7 +137,7 @@ defmodule GuildshipWeb.Schema do
         field :guild_membership, :guild_membership
       end
 
-      resolve &Resolvers.Guilds.join_guild/3
+      resolve_safe &Resolvers.Guilds.join_guild/3
     end
 
     payload field :create_guild do
@@ -149,7 +149,7 @@ defmodule GuildshipWeb.Schema do
         field :guild, non_null(:guild)
       end
 
-      resolve &Resolvers.Guilds.create_guild/3
+      resolve_safe &Resolvers.Guilds.create_guild/3
     end
   end
 end
