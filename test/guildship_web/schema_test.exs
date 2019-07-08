@@ -125,6 +125,79 @@ defmodule GuildshipWeb.SchemaTest do
                 }
               }} = actual
     end
+
+    test "I can't get someone else's guild membership" do
+      user = insert(:user)
+      other_user = insert(:user)
+      insert(:guild_membership, user: other_user)
+      other_user_id = to_global_id(:user, other_user.id)
+
+      query = """
+        query GetUser($id: ID!) {
+          node(id: $id) {
+            ...on User {
+              guildMemberships {
+                user {
+                  id
+                }
+              }
+            }
+          }
+        }
+      """
+
+      actual =
+        run(query,
+          context: %{current_user: user},
+          variables: %{"id" => other_user_id}
+        )
+
+      assert {:ok,
+              %{
+                data: %{
+                  "node" => %{
+                    "guildMemberships" => nil
+                  }
+                },
+                errors: [_]
+              }} = actual
+    end
+
+    test "I can get my own guild memberships" do
+      user = insert(:user)
+      insert(:guild_membership, user: user)
+
+      query = """
+        query {
+          me {
+            guildMemberships {
+              user {
+                id
+              }
+            }
+          }
+        }
+      """
+
+      user_id = to_global_id(:user, user.id, GuildshipWeb.Schema)
+
+      actual = run(query, context: %{current_user: user})
+
+      assert {:ok,
+              %{
+                data: %{
+                  "me" => %{
+                    "guildMemberships" => [
+                      %{
+                        "user" => %{
+                          "id" => ^user_id
+                        }
+                      }
+                    ]
+                  }
+                }
+              }} = actual
+    end
   end
 
   describe "Guilds" do
