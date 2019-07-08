@@ -128,6 +128,18 @@ defmodule GuildshipWeb.Schema do
       resolve &Resolvers.Accounts.login_with_email_and_password/3
     end
 
+    payload field :join_guild do
+      input do
+        field :guild_id, non_null(:id)
+      end
+
+      output do
+        field :guild_membership, :guild_membership
+      end
+
+      resolve &Resolvers.Guilds.join_guild/3
+    end
+
     payload field :create_guild do
       input do
         field :display_name, non_null(:string)

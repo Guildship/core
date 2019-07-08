@@ -28,4 +28,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :argon2_elixir,
+  parallelism: :erlang.system_info(:logical_processors)
+
 import_config "#{Mix.env()}.exs"

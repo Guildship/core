@@ -6,7 +6,8 @@ defmodule Guildship.Factory do
     %Accounts.Credential{
       type: "email",
       username: Faker.Internet.email(),
-      password_hash: "abstemiously-monkey-quintessential-essence"
+      password_hash:
+        "$argon2id$v=19$m=16,t=1,p=1$c29tZXNhbHRTT01FU0FMVA$NvjlftI5j4gX8QZYMNh6QDZgXyc6oQi5gqWL/A2i5zM"
     }
   end
 
