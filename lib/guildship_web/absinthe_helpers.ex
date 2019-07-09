@@ -22,29 +22,22 @@ defmodule GuildshipWeb.AbsintheHelpers do
     end
   end
 
-  def format_details({key, value}) when is_atom(value) do
-    {key, to_string(value)}
-  end
-
-  def format_details({key, value}) do
-    {key, value}
-  end
-
-  def format_details([head | tail]) do
-    [format_details(head) | format_details(tail)]
-  end
-
-  def format_details(val), do: val
-
   def format_changeset(changeset) do
     # {:error, [email: {"has already been taken", []}]}
     errors =
-      changeset.errors
-      |> Enum.map(fn {key, {value, context}} ->
-        [message: "#{key} #{value}", details: format_details(context)]
+      Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+        Enum.reduce(opts, msg, fn {key, value}, acc ->
+          String.replace(acc, "%{#{key}}", to_string(value))
+        end)
       end)
 
-    {:error, errors}
+    {:error,
+     %{
+       message: "Validation failed",
+       changeset: %{
+         errors: errors
+       }
+     }}
   end
 
   @doc """
