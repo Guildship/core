@@ -10,8 +10,7 @@ config :guildship, GuildshipWeb.Endpoint,
   url: [host: "guildship.co", port: System.get_env("PORT")],
   server: true,
   root: ".",
-  version: Application.spec(:guildship, :vsn),
-  instrumenters: [Timber.Phoenix]
+  version: Application.spec(:guildship, :vsn)
 
 config :guildship, Guildship.Repo,
   url:
@@ -19,14 +18,16 @@ config :guildship, Guildship.Repo,
   pool_size: 10,
   log: false
 
+config :absinthe, Absinthe.Logger, filter_variables: ["token", "password"]
+
 config :timber,
   api_key: System.get_env("TIMBER_API_KEY"),
   source_id: System.get_env("TIMBER_SOURCE_ID")
 
 config :logger,
-  level: :info,
+  level: :debugger,
   backends: [Timber.LoggerBackends.HTTP]
 
 config :argon2_elixir,
-  t_cost: 4,
+  t_cost: 3,
   m_cost: 16

@@ -12,7 +12,6 @@ defmodule GuildshipWeb.Endpoint do
   end
 
   plug Plug.RequestId
-  plug Plug.Logger
   plug CORSPlug, origin: "*"
 
   plug Plug.Parsers,

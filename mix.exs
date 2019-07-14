@@ -56,8 +56,8 @@ defmodule Guildship.Umbrella.MixProject do
       {:bodyguard, "~> 2.2.3"},
       {:distillery, "~> 2.1.1"},
       {:timber, "~> 3.1.2"},
+      {:timber_exceptions, "~> 2.1.0"},
       {:timber_ecto, "~> 2.0"},
-      {:timber_phoenix, "~> 1.0"},
       {:cors_plug, "~> 2.0"},
       {:guardian, "~> 1.2.1"}
     ]

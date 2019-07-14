@@ -21,6 +21,8 @@ config :guildship, Guildship.Guardian,
 
 config :guildship, Guildship.Repo, migration_timestamps: [type: :utc_datetime]
 
+config :absinthe, Absinthe.Logger, filter_variables: []
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

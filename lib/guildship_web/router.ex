@@ -5,14 +5,24 @@ defmodule GuildshipWeb.Router do
     plug :accepts, ["json"]
   end
 
-  get("/health", GuildshipWeb.PageController, :health)
+  pipeline :log do
+    plug Plug.Logger
+  end
 
-  forward "/api", Absinthe.Plug,
-    json_codec: Phoenix.json_library(),
-    schema: GuildshipWeb.Schema
+  scope "/health" do
+    get "/", GuildshipWeb.PageController, :health
+  end
 
-  forward "/graphiql", Absinthe.Plug.GraphiQL,
-    schema: GuildshipWeb.Schema,
-    json_codec: Phoenix.json_library(),
-    interface: :playground
+  scope "/" do
+    pipe_through :log
+
+    forward "/api", Absinthe.Plug,
+      json_codec: Phoenix.json_library(),
+      schema: GuildshipWeb.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: GuildshipWeb.Schema,
+      json_codec: Phoenix.json_library(),
+      interface: :playground
+  end
 end

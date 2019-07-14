@@ -12,6 +12,8 @@ defmodule Guildship.Application do
       Endpoint
     ]
 
+    :ok = Logger.add_translator({Timber.Exceptions.Translator, :translate})
+
     :ok =
       :telemetry.attach(
         "timber-ecto-query-handler",
