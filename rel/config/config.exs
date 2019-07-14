@@ -9,8 +9,7 @@ config :guildship, GuildshipWeb.Endpoint,
   sever: true,
   root: ".",
   version: Application.spec(:guildship, :vsn),
-  secret_key_base: System.get_env("SECRET_KEY_BASE") || default_secret_key_base,
-  instrumenters: [Timber.Phoenix]
+  secret_key_base: System.get_env("SECRET_KEY_BASE") || default_secret_key_base
 
 config :guildship, Guildship.Repo,
   url:
