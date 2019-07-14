@@ -15,6 +15,7 @@ defmodule GuildshipWeb.Context do
            get_req_header(conn, "authorization"),
          {:ok, current_user, _} <-
            Guildship.Guardian.resource_from_token(token) do
+      Timber.add_context(user: %{id: current_user.id})
       %{current_user: current_user}
     else
       _ -> %{}

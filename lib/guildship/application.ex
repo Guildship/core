@@ -12,8 +12,6 @@ defmodule Guildship.Application do
       Endpoint
     ]
 
-    :ok = Logger.add_translator({Timber.Exceptions.Translator, :translate})
-
     opts = [strategy: :one_for_one, name: Guildship.Supervisor]
     Supervisor.start_link(children, opts)
   end
