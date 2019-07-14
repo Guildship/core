@@ -31,8 +31,6 @@ defmodule GuildshipWeb.Endpoint do
     key: "_guildship_web_key",
     signing_salt: "YvhD4wN1"
 
-  plug Timber.Plug.HTTPContext
-  plug Timber.Plug.Event
   plug GuildshipWeb.Context
   plug GuildshipWeb.Router
 end
