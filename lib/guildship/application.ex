@@ -7,6 +7,8 @@ defmodule Guildship.Application do
   alias GuildshipWeb.Endpoint
 
   def start(_type, _args) do
+    :ok = Logger.add_translator({Timber.Exceptions.Translator, :translate})
+
     children = [
       Guildship.Repo,
       Endpoint

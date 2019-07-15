@@ -25,7 +25,7 @@ config :timber,
   source_id: System.get_env("TIMBER_SOURCE_ID")
 
 config :logger,
-  level: :debugger,
+  level: :debug,
   backends: [Timber.LoggerBackends.HTTP]
 
 config :argon2_elixir,
