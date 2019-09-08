@@ -377,5 +377,37 @@ defmodule GuildshipWeb.SchemaTest do
                 }
               }} = actual
     end
+
+    test "can fetch public guilds" do
+      insert(:guild, display_name: "test!")
+      query = "
+        query {
+          publicGuilds(first: 10) {
+            edges {
+              node {
+                displayName
+              }
+            }
+          }
+        }
+      "
+
+      actual = run(query)
+
+      assert {:ok,
+              %{
+                data: %{
+                  "publicGuilds" => %{
+                    "edges" => [
+                      %{
+                        "node" => %{
+                          "displayName" => "test!"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }} = actual
+    end
   end
 end

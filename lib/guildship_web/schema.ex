@@ -89,9 +89,18 @@ defmodule GuildshipWeb.Schema do
       end
     end
 
-    @desc "list guilds"
+    @desc """
+    ### CAUTION!
+
+    This field only works for logged-in admins.
+    To see all public guilds use the `publicGuilds` query.
+    """
     connection field :guilds, node_type: :guild do
       resolve_safe &Resolvers.Guilds.guilds/3
+    end
+
+    connection field :public_guilds, node_type: :guild do
+      resolve_safe &Resolvers.Guilds.public_guilds/3
     end
 
     field :me, :user do

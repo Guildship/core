@@ -16,6 +16,14 @@ defmodule GuildshipWeb.Resolvers.Guilds do
     {:error, "You must be logged in!"}
   end
 
+  def public_guilds(_, args, _) do
+    Absinthe.Relay.Connection.from_query(
+      Guilds.Guild,
+      &Guildship.Repo.all/1,
+      args
+    )
+  end
+
   def join_guild(_, %{guild_id: guild_id}, %{
         context: %{current_user: current_user}
       }) do
