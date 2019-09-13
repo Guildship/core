@@ -409,5 +409,67 @@ defmodule GuildshipWeb.SchemaTest do
                 }
               }} = actual
     end
+
+    test "can get version info if on dev" do
+      query = "
+        query {
+          versionInfo {
+            commitSha
+            buildTime
+            branchName
+          }
+        }
+      "
+
+      actual = run(query)
+
+      assert {:ok,
+              %{
+                data: %{
+                  "versionInfo" => %{
+                    "commitSha" => "__DEVELOPMENT__",
+                    "buildTime" => buildTime,
+                    "branchName" => branchName
+                  }
+                }
+              }} = actual
+
+      assert {:ok, %DateTime{}, _} = DateTime.from_iso8601(buildTime)
+      assert is_binary(branchName) == true
+    end
+
+    test "can get version info if deployed" do
+      System.put_env([
+        {"RENDER_GIT_COMMIT", "68152a59fca86777fc427c4c0f6f0b3784368007"},
+        {"RENDER_GIT_BRANCH", "master"}
+      ])
+
+      query = "
+        query {
+          versionInfo {
+            commitSha
+            buildTime
+            branchName
+          }
+        }
+      "
+
+      actual = run(query)
+
+      # Cleanup environment vars
+      System.delete_env("RENDER_GIT_COMMIT")
+      System.delete_env("RENDER_GIT_BRANCH")
+
+      assert {:ok,
+              %{
+                data: %{
+                  "versionInfo" => %{
+                    "commitSha" => "68152a59fca86777fc427c4c0f6f0b3784368007",
+                    "buildTime" => _buildTime,
+                    "branchName" => "master"
+                  }
+                }
+              }} = actual
+    end
   end
 end

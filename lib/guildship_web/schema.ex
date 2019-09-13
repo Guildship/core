@@ -55,6 +55,13 @@ defmodule GuildshipWeb.Schema do
       end
   end
 
+  object(:version_info) do
+    meta :cache, max_age: 30
+    field :commit_sha, :string
+    field :build_time, :datetime
+    field :branch_name, :string
+  end
+
   node interface do
     resolve_type fn
       %Guilds.Guild{}, _ -> :guild
@@ -105,6 +112,18 @@ defmodule GuildshipWeb.Schema do
 
     field :me, :user do
       resolve_safe &Resolvers.Accounts.me/3
+    end
+
+    @build_time DateTime.utc_now()
+    field :version_info, :version_info do
+      resolve fn _, _, _ ->
+        {:ok,
+         %{
+           commit_sha: System.get_env("RENDER_GIT_COMMIT") || "__DEVELOPMENT__",
+           build_time: @build_time,
+           branch_name: System.get_env("RENDER_GIT_BRANCH") || "__DEVELOPMENT__"
+         }}
+      end
     end
   end
 
