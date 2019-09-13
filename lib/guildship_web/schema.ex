@@ -57,9 +57,9 @@ defmodule GuildshipWeb.Schema do
 
   object(:version_info) do
     meta :cache, max_age: 30
-    field :commit_sha, :string
-    field :build_time, :datetime
-    field :branch_name, :string
+    field :commit_sha, non_null(:string)
+    field :build_time, non_null(:datetime)
+    field :branch_name, non_null(:string)
   end
 
   node interface do
@@ -115,7 +115,7 @@ defmodule GuildshipWeb.Schema do
     end
 
     @build_time DateTime.utc_now()
-    field :version_info, :version_info do
+    field :version_info, non_null(:version_info) do
       resolve fn _, _, _ ->
         {:ok,
          %{
