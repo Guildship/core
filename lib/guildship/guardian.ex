@@ -1,8 +1,9 @@
 defmodule Guildship.Guardian do
   use Guardian, otp_app: :guildship
+  alias Guildship.HashID
 
   def subject_for_token(resource, _claims) do
-    sub = to_string(resource.id)
+    sub = resource.id |> HashID.encode()
     {:ok, sub}
   end
 
@@ -11,7 +12,7 @@ defmodule Guildship.Guardian do
     # found in the `"sub"` key. In `above subject_for_token/2` we returned
     # the resource id so here we'll rely on that to look it up.
     id = claims["sub"]
-    resource = Guildship.Accounts.get_user_by_id(id |> String.to_integer())
+    resource = Guildship.Accounts.get_user_by_id(id |> HashID.decode())
 
     case resource do
       %Guildship.Accounts.User{} -> {:ok, resource}
