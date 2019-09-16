@@ -5,7 +5,9 @@
 use Mix.Config
 
 config :guildship,
-  ecto_repos: [Guildship.Repo]
+  ecto_repos: [Guildship.Repo],
+  hashid_salt:
+    "PpNFg4IM2dHJPLxXocWPgb5WCshLRUAprkE5jOEMRoqXND+i1Psu6HViuXun+7su"
 
 # Configures the endpoint
 config :guildship, GuildshipWeb.Endpoint,

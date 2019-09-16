@@ -4,6 +4,9 @@
 # the umbrella root.
 use Mix.Config
 
+config :guildship,
+  hashid_salt: System.get_env("SECRET_KEY_BASE")
+
 config :guildship, GuildshipWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
   # This is critical for ensuring web-sockets properly authorize.

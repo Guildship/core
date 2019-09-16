@@ -1,6 +1,10 @@
 defmodule GuildshipWeb.Schema do
   use Absinthe.Schema
-  use Absinthe.Relay.Schema, :modern
+
+  use Absinthe.Relay.Schema,
+    flavor: :modern,
+    global_id_translator: GuildshipWeb.Absinthe.IDTranslator
+
   use Absinthe.Relay.Schema.Notation, :modern
   import Absinthe.Resolution.Helpers
   import GuildshipWeb.AbsintheHelpers
