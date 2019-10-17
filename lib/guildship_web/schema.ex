@@ -28,7 +28,6 @@ defmodule GuildshipWeb.Schema do
   connection(node_type: :guild)
 
   node object(:guild) do
-    meta :cache, max_age: 30
     field :display_name, non_null(:string)
     field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
@@ -41,7 +40,6 @@ defmodule GuildshipWeb.Schema do
   end
 
   node object(:user) do
-    meta :cache, max_age: 30
     field :username, :string
     field :created_at, :datetime
     field :updated_at, :datetime
@@ -60,7 +58,6 @@ defmodule GuildshipWeb.Schema do
   end
 
   object(:version_info) do
-    meta :cache, max_age: 30
     field :commit_sha, non_null(:string)
     field :build_time, non_null(:datetime)
     field :branch_name, non_null(:string)
@@ -118,16 +115,8 @@ defmodule GuildshipWeb.Schema do
       resolve_safe &Resolvers.Accounts.me/3
     end
 
-    @build_time DateTime.utc_now()
     field :version_info, non_null(:version_info) do
-      resolve fn _, _, _ ->
-        {:ok,
-         %{
-           commit_sha: System.get_env("RENDER_GIT_COMMIT") || "__DEVELOPMENT__",
-           build_time: @build_time,
-           branch_name: System.get_env("RENDER_GIT_BRANCH") || "__DEVELOPMENT__"
-         }}
-      end
+      resolve &Resolvers.VersionInfo.get_info/3
     end
   end
 
